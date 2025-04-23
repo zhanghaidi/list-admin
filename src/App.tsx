@@ -1,33 +1,27 @@
-import { useState } from 'react';
+import { ConfigProvider, App as AntdApp } from 'antd';
+import zhCN from 'antd/locale/zh_CN';
+import '@ant-design/v5-patch-for-react-19';
+import 'dayjs/locale/zh-cn';
 
-import reactLogo from './assets/react.svg';
+import Router from './router';
 
-import viteLogo from '/vite.svg';
-import './App.css';
-
-function App() {
-  const [count, setCount] = useState(0);
-
+const App: React.FC = () => {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <ConfigProvider
+      locale={zhCN}
+      theme={{
+        cssVar: true, // ✅ 开启 CSS 变量
+        hashed: false, // ✅ 禁用哈希类名，方便 SCSS 直接使用类名
+        token: {
+          colorPrimary: '#0063f2',
+        },
+      }}
+    >
+      <AntdApp>
+        <Router />
+      </AntdApp>
+    </ConfigProvider>
   );
-}
+};
 
 export default App;
