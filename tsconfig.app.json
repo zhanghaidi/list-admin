@@ -20,7 +20,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "forceConsistentCasingInFileNames": true, // 文件名引入大小写敏感
+    "baseUrl": ".", // 路径别名 添加后，再次输入@后，编译器会读取src目录下的资源
+    "paths": {
+      "@/*": ["./src/*"] //路径映射,配合别名使用
+    }
   },
+  "exclude": ["node_modules"],
   "include": ["src"]
 }
