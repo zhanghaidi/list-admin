@@ -13,14 +13,17 @@
   },
   "dependencies": {
     "@ant-design/icons": "^6.0.0",
+    "@tailwindcss/postcss": "^4.1.4",
     "antd": "^5.24.8",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "lucide-react": "^0.503.0",
+    "postcss": "^8.5.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.1",
+    "tailwindcss": "^4.1.4",
     "zustand": "^5.0.3"
   },
   "devDependencies": {

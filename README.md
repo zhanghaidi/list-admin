@@ -13,3 +13,5 @@
 10、配置 package.json和commitlint 和 czg
 11、pnpm add antd @ant-design/icons axios clsx dayjs zustand react-router-dom
 12、pnpm add sass @ant-design/v5-patch-for-react-19 -D
+13、pnpm install tailwindcss @tailwindcss/postcss postcss
+配置tailwindcss
