@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 
 import Error404 from '@/pages/exception/404';
 import Home from '@/pages/home';
+import Login from '@/pages/login';
 
 export const router = createBrowserRouter([
   {
@@ -11,6 +12,10 @@ export const router = createBrowserRouter([
   {
     path: '/home',
     element: <Home />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
   },
 
   {

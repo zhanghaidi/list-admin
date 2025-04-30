@@ -1,9 +1,9 @@
 import { StyleProvider } from '@ant-design/cssinjs';
 import { ConfigProvider, App as AntdApp } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
+
 import '@ant-design/v5-patch-for-react-19';
 import 'dayjs/locale/zh-cn';
-
 import Router from './router';
 
 const App: React.FC = () => {
