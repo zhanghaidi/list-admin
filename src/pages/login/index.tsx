@@ -1,9 +1,44 @@
 import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
-import { Form, Input, Image, Button } from 'antd';
+import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
+import { Form, Input, Image, Button, message } from 'antd';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { fetchGetCaptcha, fetchLogin } from '@/api/auth';
+import storage from '@/utils/storage';
 
 export default function Login() {
-  const handleLogin = (values: any) => {
-    console.log('登录数据:', values);
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [captcha, setCaptcha] = useState({ imgPath: '', captchaKey: '' });
+
+  useEffect(() => {
+    handleChangeCaptcha();
+  }, []);
+  const handleChangeCaptcha = async () => {
+    const { imgPath, captchaKey } = await fetchGetCaptcha();
+    setCaptcha({ imgPath: imgPath, captchaKey: captchaKey });
+  };
+  const handleLogin = async (values: any) => {
+    try {
+      setLoading(true);
+      const res = await fetchLogin({
+        username: values.username,
+        password: values.password,
+        captcha: values.captcha,
+        captchaKey: captcha.captchaKey,
+      });
+      storage.set('x-token', res.token);
+      storage.set('refreshToken', res.refreshToken);
+
+      message.success('登录成功');
+      navigate('/home'); // 成功跳转页面
+    } catch (error) {
+      console.error('登录失败:', error);
+      handleChangeCaptcha();
+      setLoading(false);
+    }
   };
 
   return (
@@ -34,6 +69,7 @@ export default function Login() {
               size="large"
               placeholder="请输入密码"
               prefix={<LockOutlined style={{ color: 'rgba(0, 0, 0, 0.25)' }} />}
+              iconRender={(visible) => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
             />
           </Form.Item>
 
@@ -47,20 +83,26 @@ export default function Login() {
               />
             </Form.Item>
             <Form.Item className="mb-0">
-              <Image
-                preview={false}
-                width={100}
-                height={40}
-                src=""
-                alt="验证码"
-                className="cursor-pointer border border-gray-300 rounded"
-              />
+              <div className="w-[120px] h-[40px] border border-gray-300 rounded-lg flex items-center justify-center bg-gray-100 cursor-pointer">
+                {captcha.imgPath ? (
+                  <Image
+                    preview={false}
+                    width={120}
+                    height={40}
+                    src={captcha.imgPath}
+                    onClick={handleChangeCaptcha}
+                    className="rounded-lg"
+                  />
+                ) : (
+                  <span className="text-xs text-gray-400">加载中...</span>
+                )}
+              </div>
             </Form.Item>
           </div>
 
           {/* 登录按钮 */}
           <Form.Item className="mb-0">
-            <Button size="large" type="primary" block htmlType="submit">
+            <Button size="large" type="primary" block htmlType="submit" loading={loading}>
               登录
             </Button>
           </Form.Item>
