@@ -5,7 +5,13 @@ import zhCN from 'antd/locale/zh_CN';
 import '@ant-design/v5-patch-for-react-19';
 import 'dayjs/locale/zh-cn';
 import Router from './router';
-
+function ContextHolder() {
+  const { message, modal, notification } = AntdApp.useApp();
+  window.message = message;
+  window.modal = modal;
+  window.notification = notification;
+  return null;
+}
 const App: React.FC = () => {
   return (
     <StyleProvider layer>
@@ -19,7 +25,8 @@ const App: React.FC = () => {
           },
         }}
       >
-        <AntdApp>
+        <AntdApp className="h-full">
+          <ContextHolder />
           <Router />
         </AntdApp>
       </ConfigProvider>

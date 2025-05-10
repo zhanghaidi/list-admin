@@ -1,6 +1,5 @@
 @layer theme, base,antd, components, utilities;
 @import 'tailwindcss';
-
 body {
   margin: 0;
   padding: 0;

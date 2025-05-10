@@ -1,7 +1,7 @@
 import { UserOutlined, LockOutlined, SafetyOutlined } from '@ant-design/icons';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import { Form, Input, Image, Button, message } from 'antd';
+import { Form, Input, Image, Button } from 'antd';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,8 +31,8 @@ export default function Login() {
       });
       storage.set('x-token', res.token);
       storage.set('refreshToken', res.refreshToken);
-
-      message.success('登录成功');
+      setLoading(true);
+      window.message.success('登录成功');
       navigate('/home'); // 成功跳转页面
     } catch (error) {
       console.error('登录失败:', error);
