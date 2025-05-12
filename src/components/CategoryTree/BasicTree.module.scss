@@ -1,0 +1,35 @@
+.treeContainer {
+  margin: 0 -14px;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &-text {
+    flex: 1;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 0;
+  }
+}
+
+:global {
+  .ant-tree .ant-tree-node-content-wrapper {
+    display: flex;
+    padding: 0;
+  }
+
+  .ant-tree.ant-tree-directory .ant-tree-treenode .ant-tree-switcher,
+  .ant-tree .ant-tree-node-content-wrapper .ant-tree-iconEle {
+    width: 24px;
+  }
+
+  .ant-tree-title {
+    flex: 1;
+    padding: 0 4px;
+  }
+}

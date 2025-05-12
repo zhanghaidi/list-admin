@@ -1,0 +1,13 @@
+.rightMenu {
+  position: fixed;
+  z-index: 1000;
+  display: none;
+  // border: 1px solid #ccc;
+  background: #fff;
+  padding: 5px 0;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+
+  &.show {
+    display: block;
+  }
+}

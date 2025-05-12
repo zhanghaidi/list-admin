@@ -22,3 +22,77 @@ body {
   padding: 0;
   overflow: hidden;
 }
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.clear-fix {
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+.mr10 {
+  margin-right: 10px;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.modal-from {
+  margin: 30px;
+}
+
+.search-form {
+  background-color: var(--dark-bg-color);
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--dark-color);
+}
+
+.base-table {
+  background-color: var(--dark-bg-color);
+  border-radius: 8px;
+  padding: 8px;
+  color: var(--dark-color);
+
+  .header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    color: var(--dark-color);
+    padding: 8px;
+
+    .action {
+      button {
+        margin-left: 8px;
+      }
+    }
+  }
+}
+
+.search-form + .base-table {
+  margin-top: 8px;
+}
+
+.tree-transfer {
+  .ant-transfer-list {
+    width: 50%;
+    height: 360px;
+  }
+}

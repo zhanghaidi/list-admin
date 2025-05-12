@@ -1,0 +1,37 @@
+.navSide {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-bolor);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  // justify-content: center; // ✅ 让 logo 在折叠状态下居中
+  font-size: 16px;
+  background-color: var(--dark-logo-color);
+  color: #fff;
+  height: 50px;
+  line-height: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease; // ✅ 让动画更丝滑
+}
+
+.img {
+  width: 35px;
+  height: 35px;
+  margin-left: 18px;
+  margin-right: 8px;
+  transition: all 0.3s ease;
+}
+// ✅ 折叠状态下调整 logo 大小 & 间距
+.collapsed {
+  width: 80px;
+}
+
+.collapsed .logo {
+  justify-content: center; // ✅ 居中 logo
+  padding: 0;
+}
+
+.collapsed .img {
+  margin: 0; // ✅ 去除 margin，防止偏左
+}

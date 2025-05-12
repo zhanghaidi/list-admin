@@ -1,0 +1,18 @@
+.placeholder {
+  width: 100%;
+  padding: 24px;
+
+  p {
+    text-align: center;
+
+    :global {
+      .ant-spin {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  p.p-color {
+    color: #999999;
+  }
+}

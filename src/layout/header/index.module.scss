@@ -1,0 +1,38 @@
+.navHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 65px;
+  padding: 0 20px;
+  background-color: var(--dark-bg-color);
+  color: var(--dark-color);
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+}
+.alignItemsCenter {
+  align-items: center;
+}
+.nickName {
+  cursor: pointer;
+  color: var(--dark-color);
+  margin-left: 5px; // 调整用户名与头像之间的间距
+}
+
+.themeToggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}

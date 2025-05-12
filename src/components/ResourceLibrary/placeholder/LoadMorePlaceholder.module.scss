@@ -1,0 +1,18 @@
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  &.compact {
+    padding: 8px;
+  }
+
+  p {
+    text-align: center;
+  }
+
+  a {
+    color: var(--primary-color);
+  }
+}

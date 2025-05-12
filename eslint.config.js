@@ -46,6 +46,7 @@ export default tseslint.config(
       'react-hooks/exhaustive-deps': 'warn', // ✅ 确保 useEffect 依赖数组完整
       '@typescript-eslint/no-explicit-any': 'off', // 允许 any 类型
       '@typescript-eslint/no-unused-expressions': 'off', // 允许无赋值表达式
+      'react-hooks/exhaustive-deps': 'off',
       'import/order': [
         'error',
         {

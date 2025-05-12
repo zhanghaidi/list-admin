@@ -36,10 +36,4 @@ declare namespace ModalProp {
     admin?: Api.SystemManage.Admin;
     roles: Api.SystemManage.Role[];
   }
-
-  interface SettingProp {
-    setting: MutableRefObject<Api.SystemManage.Setting>;
-    appType?: 'android' | 'ios' | 'windows';
-    onUpdate: (updatedSetting: Api.SystemManage.Setting) => void;
-  }
 }
