@@ -60,7 +60,7 @@ import storage from '@/utils/storage';
 import MoveSpecimen from './MoveSpecimen';
 import OperateGltf from './OperateGltf';
 import OperateSpecimen from './OperateSpecimen';
-import Preview from './Preview';
+// import Preview from './Preview';
 
 export default function SpecimenList() {
   const [form] = useForm();
@@ -71,7 +71,7 @@ export default function SpecimenList() {
   const treeRef = useRef<BasicTreeRef>(null);
   const specimenRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Specimen) => void }>();
   const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
-  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
+  //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
   const moveSpecimenRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
   useEffect(() => {
     getCategoryList();
@@ -344,7 +344,8 @@ export default function SpecimenList() {
   };
   // 标本预览
   const handlePreview = (record: Api.ResourceManage.Specimen) => {
-    previewRef.current?.open('edit', record);
+    // previewRef.current?.open('edit', record);
+    console.log(record);
   };
   //贴图查看
   const handleMaps = async (record: Api.ResourceManage.Specimen) => {
@@ -577,7 +578,7 @@ export default function SpecimenList() {
         </div>
         <OperateSpecimen mRef={specimenRef} update={refresh} />
         <OperateGltf mRef={gltfRef} update={refresh} />
-        <Preview mRef={previewRef} update={refresh} />
+        {/* <Preview mRef={previewRef} update={refresh} /> */}
         <MoveSpecimen
           mRef={moveSpecimenRef}
           update={() => {

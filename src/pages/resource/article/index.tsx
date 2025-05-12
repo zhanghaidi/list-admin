@@ -182,14 +182,14 @@ export default function ArticleList() {
   ];
 
   const handleCreate = () => {
-    articleRef.current?.open('create');
+    articleRef.current.open('create');
   };
   const handleUpdate = (record: Api.ResourceManage.Article) => {
-    articleRef.current?.open('edit', record);
+    articleRef.current.open('edit', record);
   };
   // 批量移动
   const handleBatchMove = () => {
-    moveArticleRef.current?.open('create', ids);
+    moveArticleRef.current.open('create', ids);
   };
   // 批量排序
   const handleSort = async () => {

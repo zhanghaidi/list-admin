@@ -4,12 +4,12 @@ import clsx from 'clsx';
 import React, { useState, useEffect, useRef } from 'react';
 // import { useInfiniteScroll } from 'ahooks'
 
-import { fetchGetCategory } from '@/api/category';
+import { fetchGetCategory } from '@/api/model';
 import { fetchGetModelList, fetchGetSpecimenList, fetchGetSliceList, fetchGetVideoList } from '@/api/resource';
 import imageLoadFailed from '@/assets/images/image-error.png';
 import { bodyNoScroll, bodyYesScroll, getImageUrl } from '@/utils';
 
-import styles from './index.module.less';
+import styles from './index.module.scss';
 import { ListPlaceholder } from './placeholder';
 
 interface ResourceLibraryModalProps {

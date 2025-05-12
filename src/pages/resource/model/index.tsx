@@ -61,7 +61,7 @@ import storage from '@/utils/storage';
 import MoveModel from './MoveModel';
 import OperateGltf from './OperateGltf';
 import OperateModel from './OperateModel';
-import Preview from './Preview';
+// import Preview from './Preview';
 
 export default function ModelList() {
   const [form] = useForm();
@@ -70,7 +70,7 @@ export default function ModelList() {
   const [ids, setIds] = useState<number[]>([]);
   const modelRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Model) => void }>();
   const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
-  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
+  //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
   const moveModelRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
   const treeRef = useRef<BasicTreeRef>(null);
   useEffect(() => {
@@ -360,7 +360,8 @@ export default function ModelList() {
   };
   // 模型预览
   const handlePreview = (record: Api.ResourceManage.Model) => {
-    previewRef.current?.open('edit', record);
+    console.log(record);
+    // previewRef.current?.open('edit', record);
   };
   //贴图查看
   const handleMaps = async (record: Api.ResourceManage.Model) => {
@@ -591,7 +592,7 @@ export default function ModelList() {
         </div>
         <OperateModel mRef={modelRef} update={refresh} />
         <OperateGltf mRef={gltfRef} update={refresh} />
-        <Preview mRef={previewRef} update={refresh} />
+        {/* <Preview mRef={previewRef} update={refresh} /> */}
         <MoveModel
           mRef={moveModelRef}
           update={() => {
