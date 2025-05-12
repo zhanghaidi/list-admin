@@ -1,0 +1,24 @@
+:root {
+  --dark-bg-color: #fff;
+  --dark-color: #000;
+  --dark-home-bg-color: #f0f2f5;
+  --dark-logo-color: #001529;
+  --primary-color: #3d7eff; // 模型查看器组件库使用
+  --login-bg-color: #ffffffee; /* 默认浅色半透明白 */
+  --icon-color: rgba(0, 0, 0, 0.25); // 默认亮色图标颜色
+}
+
+.dark {
+  --dark-bg-color: #141414;
+  --dark-color: #fff;
+  --dark-home-bg-color: #000;
+  --dark-logo-color: #141414;
+  --primary-color: #2852a6; // 模型查看器组件库使用
+  --login-bg-color: #1f1f1fdd; /* 暗黑下半透明深灰 */
+  --icon-color: rgba(255, 255, 255, 0.35); // 暗黑模式下更亮的白色图标
+}
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

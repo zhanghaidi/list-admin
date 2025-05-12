@@ -1,0 +1,65 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to top, #ff9a9e, #fecfef); //活力暖橙粉
+  //   background: linear-gradient(to right, #667eea, #764ba2); //温和商务紫红
+  //   background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+  //   background: linear-gradient(to bottom, #1e3c72, #2a5298); //自然青绿
+  //   background: linear-gradient(to top right, #a8edea, #fed6e3);//暗黑蓝灰
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  padding: 32px;
+  background: var(--login-bg-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  color: var(--dark-color);
+  margin-bottom: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.captchaRow {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  align-items: center; // 加上这句让输入框和图片垂直对齐
+}
+// 让第一个输入框占满剩余空间
+.captchaRow :global(.ant-form-item:first-child) {
+  flex: 1 1 auto;
+}
+
+.captchaBox {
+  width: 130px;
+  height: 40px;
+  border: 1px solid #d1d5db; // border-gray-300
+  border-radius: 8px;
+  background-color: #f3f4f6; // bg-gray-100
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.loadingText {
+  font-size: 12px;
+  color: #9ca3af; // text-gray-400
+}
+.icon {
+  color: var(--icon-color);
+}
