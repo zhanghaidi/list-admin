@@ -1,7 +1,6 @@
 import { LoginOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, MenuProps, Space, Switch } from 'antd';
+import { Avatar, Button, ColorPicker, Dropdown, Space, Switch, Tooltip } from 'antd';
 import clsx from 'clsx';
-import { Palette } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,80 +10,55 @@ import storage from '@/utils/storage';
 
 import BreadCrumb from './components/BreadCrumb';
 import styles from './index.module.scss';
+
+const presetColors = [
+  '#1677ff', // 拂晓蓝
+  '#eb2f96', // 法式洋红
+  '#fa541c', // 火山
+  '#fa8c16', // 日暮
+  '#13c2c2', // 明青
+  '#52c41a', // 极光绿
+  '#a0d911', // 青柠
+  '#722ed1', // 酱紫
+  '#1890ff', // 极客蓝
+];
+
 const NavHeader = () => {
   const navigate = useNavigate();
   const { userInfo, collapsed, isDark, updateCollapsed, updateTheme, colorPrimary, updateColorPrimary } =
     useUserStore();
-  const themeColors = [
-    {
-      name: '拂晓蓝',
-      color: '#1677ff',
-    },
-    {
-      name: '法式洋红',
-      color: '#eb2f96',
-    },
-    {
-      name: '火山',
-      color: '#fa541c',
-    },
-    {
-      name: '日暮',
-      color: '#fa8c16',
-    },
-    {
-      name: '明青',
-      color: '#13c2c2',
-    },
-    {
-      name: '极光绿',
-      color: '#52c41a',
-    },
-    {
-      name: '青柠',
-      color: '#a0d911',
-    },
-    {
-      name: '酱紫',
-      color: '#722ed1',
-    },
-    {
-      name: '极客蓝',
-      color: '#1890ff',
-    },
-  ];
-  const colors: MenuProps['items'] = [
-    ...themeColors.map((color) => {
-      return {
-        key: color.color,
-        label: (
-          <Space
-            onClick={() => {
-              storage.set('colorPrimary', color);
-              updateColorPrimary(color);
-            }}
-          >
-            <Button
-              style={{
-                backgroundColor: color.color,
-                borderColor: color.color,
-                width: 30,
-                height: 30,
-              }}
-            />
-            <span style={{ color: color.color }}>{color.name}</span>
-          </Space>
-        ),
-      };
-    }),
-  ];
-  const items: MenuProps['items'] = [
+
+  useEffect(() => {
+    handleThemeSwitch(isDark);
+  }, []);
+
+  const handleThemeSwitch = (isDark: boolean) => {
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    document.documentElement.classList.toggle('dark', isDark);
+    updateTheme(isDark);
+  };
+
+  const handleColorChange = (color: string) => {
+    const themeColor = { name: '', color };
+    storage.set('colorPrimary', themeColor);
+    updateColorPrimary(themeColor);
+  };
+
+  const onClick: any = ({ key }: { key: string }) => {
+    if (key === 'logout') {
+      storage.remove('x-token');
+      storage.remove('refreshToken');
+      navigate('/login');
+    }
+  };
+
+  const userMenu = [
     {
       key: 'nickName',
       label: '用户名：' + userInfo.nickName,
     },
     {
-      key: '姓名',
+      key: 'realName',
       label: '手机号：' + userInfo.realName,
     },
     {
@@ -94,30 +68,6 @@ const NavHeader = () => {
     },
   ];
 
-  useEffect(() => {
-    handleThemeSwitch(isDark);
-  }, []);
-
-  // 切换主题
-  const handleThemeSwitch = (isDark: boolean) => {
-    if (isDark) {
-      document.documentElement.dataset.theme = 'dark';
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.dataset.theme = 'light';
-      document.documentElement.classList.remove('dark');
-    }
-    storage.set('isDark', isDark);
-    updateTheme(isDark);
-  };
-  // 点击退出
-  const onClick: MenuProps['onClick'] = ({ key }) => {
-    if (key === 'logout') {
-      storage.remove('x-token');
-      storage.remove('refreshToken');
-      navigate('/login');
-    }
-  };
   return (
     <div className={styles.navHeader}>
       <div className={clsx(styles.left, styles.alignItemsCenter)}>
@@ -125,44 +75,39 @@ const NavHeader = () => {
           type="text"
           icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
           onClick={() => updateCollapsed()}
-          style={{
-            fontSize: '16px',
-            width: 30,
-            height: 30,
-          }}
+          style={{ fontSize: '16px', width: 30, height: 30 }}
         />
         <BreadCrumb />
       </div>
 
       <div className={clsx(styles.right, styles.alignItemsCenter)}>
-        <Switch
-          checked={isDark}
-          onChange={handleThemeSwitch}
-          checkedChildren={<MoonOutlined />}
-          unCheckedChildren={<SunOutlined />}
-        />
+        <Tooltip title="主题切换">
+          <Switch
+            checked={isDark}
+            onChange={handleThemeSwitch}
+            checkedChildren={<MoonOutlined />}
+            unCheckedChildren={<SunOutlined />}
+          />
+        </Tooltip>
 
-        <Dropdown menu={{ items: colors }} trigger={['click']}>
-          <Button
-            type="text"
-            size="small"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '18px',
-              marginRight: 10,
-            }}
-          >
-            <Palette size={24} color={colorPrimary.color} />
-          </Button>
-        </Dropdown>
+        <Tooltip title="主题色">
+          <ColorPicker
+            defaultValue={colorPrimary.color}
+            value={colorPrimary.color}
+            onChangeComplete={(color) => handleColorChange(color.toHexString())}
+            presets={[
+              {
+                label: '推荐主题色',
+                colors: presetColors,
+              },
+            ]}
+            style={{ margin: 12 }}
+          />
+        </Tooltip>
 
-        <Dropdown menu={{ items, onClick }} trigger={['click']}>
+        <Dropdown menu={{ items: userMenu, onClick }} trigger={['click']}>
           <Space size={0}>
-            <span>
-              <Avatar size="small" src={getImageUrl(userInfo.avatar)} />
-            </span>
+            <Avatar size="small" src={getImageUrl(userInfo.avatar)} />
             <span className={styles.nickName}>{userInfo.username}</span>
           </Space>
         </Dropdown>
@@ -170,4 +115,5 @@ const NavHeader = () => {
     </div>
   );
 };
+
 export default NavHeader;
