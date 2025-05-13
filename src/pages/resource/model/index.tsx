@@ -68,10 +68,16 @@ export default function ModelList() {
   const [sortForm] = useForm();
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
-  const modelRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Model) => void }>();
-  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
+  const modelRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Model) => void }>({
+    open: () => {},
+  });
+  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>({
+    open: () => {},
+  });
   //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
-  const moveModelRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
+  const moveModelRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
+    open: () => {},
+  });
   const treeRef = useRef<BasicTreeRef>(null);
   useEffect(() => {
     getCategoryList();

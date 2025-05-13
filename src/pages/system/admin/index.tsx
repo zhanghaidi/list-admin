@@ -26,7 +26,9 @@ export default function AdminList() {
   // 自定义Ref
   const adminRef = useRef<{
     open: (type: ModalProp.OperateAction, data?: ModalProp.AdminProp) => void;
-  }>();
+  }>({
+    open: () => {},
+  });
   // 表格数据
   const getTableData = (
     { current, pageSize }: { current: number; pageSize: number },

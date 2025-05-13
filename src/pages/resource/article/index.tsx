@@ -52,8 +52,12 @@ export default function ArticleList() {
   const [sortForm] = useForm();
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
-  const articleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Article) => void }>();
-  const moveArticleRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
+  const articleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Article) => void }>({
+    open: () => {},
+  });
+  const moveArticleRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
+    open: () => {},
+  });
   const treeRef = useRef<BasicTreeRef>(null);
 
   useEffect(() => {

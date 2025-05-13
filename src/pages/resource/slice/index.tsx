@@ -60,8 +60,12 @@ export default function SliceList() {
 
   const [ids, setIds] = useState<number[]>([]);
   const treeRef = useRef<BasicTreeRef>(null);
-  const sliceRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Slice) => void }>();
-  const moveSliceRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
+  const sliceRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Slice) => void }>({
+    open: () => {},
+  });
+  const moveSliceRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
+    open: () => {},
+  });
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   useEffect(() => {
     getCategoryList();

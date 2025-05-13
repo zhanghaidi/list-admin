@@ -10,7 +10,9 @@ import { fetchGetRoleList, fetchDeleteRole } from '@/api/role';
 import OperateRole from './OperateRole';
 export default function RoleList() {
   const [form] = useForm();
-  const roleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.SystemManage.Role) => void }>();
+  const roleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.SystemManage.Role) => void }>({
+    open: () => {},
+  });
   const getTableData = (
     { current, pageSize }: { current: number; pageSize: number },
     formData: Api.Common.SearchParams,

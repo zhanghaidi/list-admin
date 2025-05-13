@@ -69,10 +69,16 @@ export default function SpecimenList() {
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
   const treeRef = useRef<BasicTreeRef>(null);
-  const specimenRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Specimen) => void }>();
-  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
+  const specimenRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Specimen) => void }>({
+    open: () => {},
+  });
+  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>({
+    open: () => {},
+  });
   //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
-  const moveSpecimenRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>();
+  const moveSpecimenRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
+    open: () => {},
+  });
   useEffect(() => {
     getCategoryList();
   }, []);
