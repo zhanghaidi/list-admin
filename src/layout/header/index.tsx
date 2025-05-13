@@ -21,6 +21,7 @@ const presetColors = [
   '#a0d911', // 青柠
   '#722ed1', // 酱紫
   '#1890ff', // 极客蓝
+  '#faad14', // 金盏花
 ];
 
 const NavHeader = () => {
