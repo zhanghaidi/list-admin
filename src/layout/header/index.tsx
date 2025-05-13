@@ -1,7 +1,7 @@
-import { LoginOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, MenuProps, Space } from 'antd';
+import { LoginOutlined, MenuFoldOutlined, MenuUnfoldOutlined, MoonOutlined, SunOutlined } from '@ant-design/icons';
+import { Avatar, Button, Dropdown, MenuProps, Space, Switch } from 'antd';
 import clsx from 'clsx';
-import { Sun, Moon, Palette } from 'lucide-react';
+import { Palette } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -135,9 +135,13 @@ const NavHeader = () => {
       </div>
 
       <div className={clsx(styles.right, styles.alignItemsCenter)}>
-        <Button type="text" size="small" onClick={() => handleThemeSwitch(!isDark)}>
-          {isDark ? <Sun size={24} color="white" /> : <Moon size={24} />}
-        </Button>
+        <Switch
+          checked={isDark}
+          onChange={handleThemeSwitch}
+          checkedChildren={<MoonOutlined />}
+          unCheckedChildren={<SunOutlined />}
+        />
+
         <Dropdown menu={{ items: colors }} trigger={['click']}>
           <Button
             type="text"
