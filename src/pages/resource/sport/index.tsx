@@ -1,11 +1,9 @@
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
-  CopyOutlined,
   DeleteOutlined,
   EditOutlined,
   EyeOutlined,
-  FileSearchOutlined,
   FolderAddOutlined,
   OrderedListOutlined,
   PlusOutlined,
@@ -13,39 +11,46 @@ import {
   TruckOutlined
 } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import { Button, Table, Form, Input, Space, Modal, message, Image, Select, Switch, QRCode, Typography, InputNumber, Card, Col, Row } from 'antd';
+import { Button, Table, Form, Input, Space, Modal, message, Image, Select, Switch, InputNumber, Card, Col, Row, QRCode, Typography, Badge, Tag } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useRef, useState } from 'react';
 
 import {
+  fetchGetSportList,
+  fetchDeleteSport,
   fetchGetCategory,
+  fetchSetSportStatus,
+  fetchSortSport,
   fetchCreateCategory,
   fetchUpdateCategory,
-  fetchDeleteCategory,
   fetchStatusCategory,
-  fetchGetSliceList,
-  fetchDeleteSlice,
-  fetchSetSliceStatus,
-  fetchCopySlice,
-  fetchSortSlice
-} from '@/api/slice';
+  fetchDeleteCategory
+} from '@/api/sport';
 import errorImg from '@/assets/images/image-error.png';
 import BasicTree, { BasicTreeRef } from '@/components/CategoryTree/BasicTree';
 import { getImageUrl } from '@/utils';
 
-import MoveSlice from './MoveSlice';
-import OperateSlice from './OperateSlice';
+import MoveSport from './MoveSport';
+import OperateSport from './OperateSport';
+import Preview from './Preview';
 
-export default function SliceList() {
+export default function SportList() {
   const [form] = useForm();
   const [sortForm] = useForm();
-
-  const [ids, setIds] = useState<number[]>([]);
-  const treeRef = useRef<BasicTreeRef>(null);
-  const sliceRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Slice) => void }>({ open: () => {} });
-  const moveSliceRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({ open: () => {} });
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
+  const [ids, setIds] = useState<number[]>([]);
+  const sportRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Sport) => void }>({
+    open: () => {}
+  });
+  const moveSportRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
+    open: () => {}
+  });
+  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Sport) => void }>({
+    open: () => {}
+  });
+  const treeRef = useRef<BasicTreeRef>(null);
+
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -57,7 +62,7 @@ export default function SliceList() {
   };
 
   const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
-    return fetchGetSliceList({
+    return fetchGetSportList({
       ...formData,
       page: current,
       pageSize: pageSize
@@ -69,16 +74,15 @@ export default function SliceList() {
     });
   };
   const { tableProps, search, refresh } = useAntdTable(getTableData, {
-    form,
-    defaultPageSize: 10
+    form
   });
 
-  const columns: ColumnsType<Api.ResourceManage.Slice> = [
+  const columns: ColumnsType<Api.ResourceManage.Sport> = [
     {
       title: '排序',
       dataIndex: 'sort',
       key: 'sort',
-      width: 100,
+      width: 80,
       align: 'center',
       render: (_, record) => (
         <Form.Item name={record.id} initialValue={record.sort} style={{ margin: 0 }}>
@@ -90,24 +94,24 @@ export default function SliceList() {
       title: '序号',
       key: 'index',
       align: 'center',
-      width: 80,
-      render: (_: any, __: Api.ResourceManage.Slice, index: number) => (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1
+      width: 50,
+      render: (_: any, __: Api.ResourceManage.Sport, index: number) => (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1
     },
-    { title: 'ID', dataIndex: 'id', key: 'id', fixed: 'left', width: 100, align: 'center' },
+    { title: 'ID', dataIndex: 'id', align: 'center', key: 'id', fixed: 'left', width: 80 },
     {
-      title: '切片封面',
+      title: '封面图',
       dataIndex: 'thumb',
       key: 'thumb',
-      fixed: 'left',
-      width: 100,
       align: 'center',
-      render: (_, record) => <Image style={{ borderRadius: '5%' }} width={55} src={getImageUrl(record.thumb)} fallback={errorImg} />
+      fixed: 'left',
+      width: 80,
+      render: (_, record) => <Image style={{ borderRadius: '5%' }} width={75} src={getImageUrl(record.thumb)} fallback={errorImg} />
     },
     {
-      title: '切片标题',
+      title: '标题',
       dataIndex: 'title',
+      width: 100,
       key: 'title',
-      width: 200,
       align: 'center',
       fixed: 'left'
     },
@@ -115,60 +119,89 @@ export default function SliceList() {
       title: '所属分类',
       dataIndex: 'categoryPath',
       key: 'categoryPath',
-      width: 150,
       align: 'center',
+      width: 120,
       render(_, record) {
         return record.categoryPath;
       }
     },
     {
-      title: '切片状态',
-      width: 100,
+      title: '运动单位',
+      key: 'angle',
       align: 'center',
-      dataIndex: 'status',
-      render(_, record) {
-        return <Switch checkedChildren="上架" unCheckedChildren="下架" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      width: 150,
+      render: (_, record) => {
+        if (record.unit > 0) {
+          return (
+            <Space size={'small'} direction="vertical">
+              <Tag color="green">
+                {record.start} ~ {record.end} {record.unit === 2 ? ' cm' : ' °'}
+              </Tag>
+              {record.joint && (
+                <span>
+                  <Typography.Text code>{record.joint}</Typography.Text>
+                </span>
+              )}
+              {record.range && (
+                <span>
+                  <Typography.Text code>{record.range}</Typography.Text>
+                </span>
+              )}
+            </Space>
+          );
+        }
+        return <Tag color="red">关闭</Tag>;
       }
     },
     {
-      title: '切片路径',
-      dataIndex: 'scene',
-      key: 'scene',
+      title: '内容描述',
+      dataIndex: 'content',
+      align: 'center',
       width: 150,
-      align: 'center'
+      key: 'content',
+      ellipsis: true
     },
     {
-      title: '切片尺寸',
-      dataIndex: 'size',
-      key: 'size',
-      width: 120,
-      align: 'center'
+      title: '类型',
+      dataIndex: 'type',
+      key: 'type',
+      width: 90,
+      align: 'center',
+      render(type: number) {
+        return {
+          2: <Badge status="success" text="模型" />,
+          3: <Badge status="processing" text="动画" />
+        }[type];
+      }
+    },
+    {
+      title: '状态',
+      dataIndex: 'status',
+      width: 100,
+      align: 'center',
+      render(_, record) {
+        return <Switch checkedChildren="显示" unCheckedChildren="隐藏" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
 
-    { title: '创建时间', dataIndex: 'createdAt', key: 'createdAt', width: 150, align: 'center' },
+    { title: '创建时间', dataIndex: 'createdAt', align: 'center', width: 150, key: 'createdAt' },
     {
       title: '操作',
       key: 'action',
-      fixed: 'right',
       align: 'center',
-      width: 425,
+      fixed: 'right',
+      width: 200,
       render(_, record) {
         return (
           <Space size={0}>
             <Button icon={<EyeOutlined />} size="small" type="link" onClick={() => handlePreview(record)}>
               预览
             </Button>
-            <Button icon={<FileSearchOutlined />} size="small" type="link" onClick={() => handleInfo(record)}>
-              信息
+            <Button icon={<QrcodeOutlined />} size="small" type="link" onClick={() => handleQrcode(record)}>
+              二维码
             </Button>
             <Button icon={<EditOutlined />} size="small" type="link" onClick={() => handleUpdate(record)}>
               编辑
-            </Button>
-            <Button icon={<CopyOutlined />} size="small" type="link" onClick={() => handleCopy(record)}>
-              复制
-            </Button>
-            <Button icon={<QrcodeOutlined />} size="small" type="link" onClick={() => handleQrcode(record)}>
-              二维码
             </Button>
             <Button icon={<DeleteOutlined />} size="small" type="link" danger onClick={() => handleDelete(record.id)}>
               删除
@@ -179,20 +212,19 @@ export default function SliceList() {
     }
   ];
 
+  // 运动解剖预览
+  const handlePreview = (record: Api.ResourceManage.Sport) => {
+    previewRef.current?.open('edit', record);
+  };
   const handleCreate = () => {
-    sliceRef.current?.open('create');
+    sportRef.current?.open('create');
   };
-  // 切片标注编辑操作
-  const handleUpdate = (record: Api.ResourceManage.Slice) => {
-    window.open(`${window.location.origin}${window.location.pathname}#/editor/slice/${record.id}`, '_blank');
-  };
-  // 切片查看预览
-  const handlePreview = (record: Api.ResourceManage.Slice) => {
-    window.open(`${window.location.origin}${window.location.pathname}#/editor/slice/${record.id}`, '_blank');
+  const handleUpdate = (record: Api.ResourceManage.Sport) => {
+    sportRef.current?.open('edit', record);
   };
   // 批量移动
   const handleBatchMove = () => {
-    moveSliceRef.current?.open('create', ids);
+    moveSportRef.current?.open('create', ids);
   };
   // 批量排序
   const handleSort = async () => {
@@ -204,17 +236,31 @@ export default function SliceList() {
     });
 
     if (sortList.length) {
-      await fetchSortSlice({ sort: sortList });
+      await fetchSortSport({ sort: sortList });
       message.success('排序成功');
     }
+  };
+  // 批量设置状态操作
+  const handleBatchSetStatus = (status: number) => {
+    const statusText = status == 0 ? '批量上架' : '批量下架';
+    Modal.confirm({
+      title: '批量更改状态',
+      content: status === 1 ? '确认批量上架选中运动解剖吗?' : '确认批量下架选中运动解剖吗?',
+      async onOk() {
+        await fetchSetSportStatus({ ids, status });
+        message.success(statusText + '成功');
+        setIds([]);
+        refresh();
+      }
+    });
   };
   // 删除操作
   const handleDelete = (id: number) => {
     Modal.confirm({
       title: '删除确认',
-      content: '确认删除该切片吗?',
+      content: '确认删除该运动解剖吗?',
       async onOk() {
-        await fetchDeleteSlice({ ids: [id] });
+        await fetchDeleteSport({ ids: [id] });
         message.success('删除成功');
         refresh();
       }
@@ -224,37 +270,24 @@ export default function SliceList() {
   const handleBatchDelete = () => {
     Modal.confirm({
       title: '批量删除确认',
-      content: <span>确认批量删除选中的切片吗？</span>,
+      content: <span>确认批量删除选中的运动解剖吗？</span>,
       async onOk() {
-        await fetchDeleteSlice({ ids });
+        await fetchDeleteSport({ ids });
         message.success('删除成功');
         setIds([]);
         refresh();
       }
     });
   };
-  // 批量设置状态操作
-  const handleBatchSetStatus = (status: number) => {
-    const statusText = status == 0 ? '批量上架' : '批量下架';
-    Modal.confirm({
-      title: '批量更改状态',
-      content: status === 1 ? '确认批量上架选中切片吗?' : '确认批量下架选中切片吗?',
-      async onOk() {
-        await fetchSetSliceStatus({ ids, status });
-        message.success(statusText + '成功');
-        setIds([]);
-        refresh();
-      }
-    });
-  };
+
   // 更改状态
-  const handleStatusChange = (record: Api.ResourceManage.Slice) => {
-    const statusText = record.status == 0 ? '上架' : '下架';
+  const handleStatusChange = (record: Api.ResourceManage.Sport) => {
+    const statusText = record.status == 0 ? '显示' : '隐藏';
     Modal.confirm({
       title: '更新确认',
-      content: `确认${statusText}此切片吗?`,
+      content: `确认${statusText}此运动解剖吗?`,
       async onOk() {
-        await fetchSetSliceStatus({ ids: [record.id], status: record.status == 0 ? 1 : 0 });
+        await fetchSetSportStatus({ ids: [record.id], status: record.status == 0 ? 1 : 0 });
         message.success(statusText + `成功`);
         refresh();
       },
@@ -262,26 +295,8 @@ export default function SliceList() {
     });
   };
 
-  // 信息编辑
-  const handleInfo = (record: Api.ResourceManage.Slice) => {
-    sliceRef.current?.open('edit', record);
-  };
-  // 复制
-  const handleCopy = (record: Api.ResourceManage.Slice) => {
-    Modal.confirm({
-      title: '复制确认',
-      content: `确认复制此切片吗?`,
-      async onOk() {
-        await fetchCopySlice({ id: record.id });
-        message.success(`复制${record.title}成功`);
-        refresh();
-      },
-      onCancel() {}
-    });
-  };
-
   // 二维码
-  const handleQrcode = (record: Api.ResourceManage.Slice) => {
+  const handleQrcode = (record: Api.ResourceManage.Sport) => {
     Modal.info({
       title: `${record.title}`,
       content: (
@@ -290,19 +305,19 @@ export default function SliceList() {
             <QRCode
               errorLevel="H"
               size={200}
-              value={`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/slice/${record.id}`}
+              value={`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/model/${record.id}`}
               icon={getImageUrl(record.thumb)}
             />
           </div>
           <div>
-            <Typography.Paragraph copyable>{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/slice/${record.id}`}</Typography.Paragraph>
+            <Typography.Paragraph copyable>{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/model/${record.id}`}</Typography.Paragraph>
           </div>
         </Space>
       )
     });
   };
 
-  // 点击选中的分类获筛选取相应切片列表
+  // 点击选中的分类获筛选取相应运动解剖列表
   const onTreeSelect = (selectedKeys: React.Key[]) => {
     form.setFieldsValue({ categoryId: selectedKeys[0] });
     search.submit();
@@ -359,16 +374,22 @@ export default function SliceList() {
       </Col>
       <Col span={21}>
         <Form className="search-form" layout="inline" form={form}>
-          <Form.Item name="keywords" label="切片名称">
-            <Input style={{ width: 300 }} placeholder="请输入切片ID/名称搜索" allowClear></Input>
+          <Form.Item name="keywords" label="运动解剖名称">
+            <Input style={{ width: 300 }} placeholder="请输入运动解剖ID/名称搜索" allowClear></Input>
           </Form.Item>
           <Form.Item hidden name="categoryId">
             <Input />
           </Form.Item>
-          <Form.Item name="status" label="切片状态">
-            <Select style={{ width: 130 }} placeholder="选择切片状态" allowClear>
-              <Select.Option value={0}>下架</Select.Option>
-              <Select.Option value={1}>上架</Select.Option>
+          <Form.Item name="status" label="显示状态">
+            <Select style={{ width: 130 }} placeholder="选择显示状态" allowClear>
+              <Select.Option value={1}>显示</Select.Option>
+              <Select.Option value={0}>隐藏</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="type" label="选择类型">
+            <Select style={{ width: 130 }} placeholder="选择模型类型" allowClear>
+              <Select.Option value={2}>模型</Select.Option>
+              <Select.Option value={3}>动画</Select.Option>
             </Select>
           </Form.Item>
           <Form.Item>
@@ -384,7 +405,7 @@ export default function SliceList() {
         </Form>
         <div className="base-table">
           <div className="header-wrapper">
-            <div className="title">切片列表</div>
+            <div className="title">运动解剖列表</div>
             <div className="action">
               <Button type="primary" onClick={handleCreate}>
                 <PlusOutlined /> 新增
@@ -431,9 +452,10 @@ export default function SliceList() {
             />
           </Form>
         </div>
-        <OperateSlice mRef={sliceRef} update={refresh} />
-        <MoveSlice
-          mRef={moveSliceRef}
+        <OperateSport mRef={sportRef} update={refresh} />
+        <Preview mRef={previewRef} update={refresh} />
+        <MoveSport
+          mRef={moveSportRef}
           update={() => {
             setIds([]);
             refresh();

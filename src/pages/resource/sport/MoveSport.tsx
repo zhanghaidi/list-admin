@@ -2,15 +2,15 @@ import { Form, Input, Modal, TreeSelect, message } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { useImperativeHandle, useState } from 'react';
 
-import { fetchGetCategory, fetchMoveModel } from '@/api/model';
+import { fetchMoveSport, fetchGetCategory } from '@/api/sport';
 
-export default function MoveModel(props: ModalProp.OperateModalProp<number[]>) {
+export default function MoveSport(props: ModalProp.OperateModalProp<number[]>) {
   const [form] = useForm();
   const [action, setAction] = useState<ModalProp.OperateAction>('create');
   const [visible, setVisible] = useState(false);
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
 
-  // 获取模型列表
+  // 获取运动解剖列表
   const getCategoryList = async () => {
     const res = await fetchGetCategory();
     setCategoryList(res.list);
@@ -35,7 +35,7 @@ export default function MoveModel(props: ModalProp.OperateModalProp<number[]>) {
     if (valid) {
       const params = { ...form.getFieldsValue() };
       if (action === 'create') {
-        await fetchMoveModel(params);
+        await fetchMoveSport(params);
         message.success('移动成功');
       }
       handleCancel();
@@ -52,7 +52,7 @@ export default function MoveModel(props: ModalProp.OperateModalProp<number[]>) {
 
   return (
     <Modal
-      title={action === 'create' ? '移动模型到分类' : '移动模型到分类'}
+      title={action === 'create' ? '移动运动解剖到分类' : '移动运动解剖到分类'}
       width={800}
       open={visible}
       okText="确定"
@@ -66,7 +66,7 @@ export default function MoveModel(props: ModalProp.OperateModalProp<number[]>) {
           <Input />
         </Form.Item>
         <Form.Item label="选择移动分类" name="categoryId" rules={[{ required: true, message: '请选择移动所属分类' }]}>
-          <TreeSelect placeholder="请选择模型所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categoryList} />
+          <TreeSelect placeholder="请选择运动解剖所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categoryList} />
         </Form.Item>
       </Form>
     </Modal>

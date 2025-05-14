@@ -377,7 +377,7 @@ declare namespace Api {
       categoryId: number;
       categoryPath: string;
       title: string;
-      type: number;
+      type: string;
       is3D: number;
       resource: {
         id: number;

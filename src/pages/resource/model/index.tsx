@@ -12,28 +12,10 @@ import {
   PlusOutlined,
   QrcodeOutlined,
   SwapOutlined,
-  TruckOutlined,
+  TruckOutlined
 } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import {
-  Button,
-  Table,
-  Form,
-  Input,
-  Space,
-  Modal,
-  message,
-  Image,
-  Badge,
-  Select,
-  Switch,
-  QRCode,
-  Typography,
-  InputNumber,
-  Card,
-  Col,
-  Row,
-} from 'antd';
+import { Button, Table, Form, Input, Space, Modal, message, Image, Badge, Select, Switch, QRCode, Typography, InputNumber, Card, Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { ColumnsType } from 'antd/es/table';
 import { useEffect, useRef, useState } from 'react';
@@ -51,7 +33,7 @@ import {
   fetchCreateCategory,
   fetchUpdateCategory,
   fetchDeleteCategory,
-  fetchStatusCategory,
+  fetchStatusCategory
 } from '@/api/model';
 import errorImg from '@/assets/images/image-error.png';
 import BasicTree, { BasicTreeRef } from '@/components/CategoryTree/BasicTree';
@@ -69,14 +51,14 @@ export default function ModelList() {
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
   const modelRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Model) => void }>({
-    open: () => {},
+    open: () => {}
   });
   const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>({
-    open: () => {},
+    open: () => {}
   });
   //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Model) => void }>();
   const moveModelRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
-    open: () => {},
+    open: () => {}
   });
   const treeRef = useRef<BasicTreeRef>(null);
   useEffect(() => {
@@ -89,23 +71,20 @@ export default function ModelList() {
     setCategoryList(res.list);
   };
 
-  const getTableData = (
-    { current, pageSize }: { current: number; pageSize: number },
-    formData: Api.Common.SearchParams,
-  ) => {
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetModelList({
       ...formData,
       page: current,
-      pageSize: pageSize,
+      pageSize: pageSize
     }).then((data) => {
       return {
         total: data.total,
-        list: data.list,
+        list: data.list
       };
     });
   };
   const { tableProps, search, refresh } = useAntdTable(getTableData, {
-    form,
+    form
   });
 
   const columns: ColumnsType<Api.ResourceManage.Model> = [
@@ -119,15 +98,14 @@ export default function ModelList() {
         <Form.Item name={record.id} initialValue={record.sort} style={{ margin: 0 }}>
           <InputNumber min={0} style={{ width: '80px', fontSize: '14px' }} />
         </Form.Item>
-      ),
+      )
     },
     {
       title: '序号',
       key: 'index',
       align: 'center',
       width: 80,
-      render: (_: any, __: Api.ResourceManage.Model, index: number) =>
-        (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1,
+      render: (_: any, __: Api.ResourceManage.Model, index: number) => (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1
     },
     { title: 'ID', dataIndex: 'id', key: 'id', fixed: 'left', width: 100, align: 'center' },
     {
@@ -137,9 +115,7 @@ export default function ModelList() {
       fixed: 'left',
       align: 'center',
       width: 100,
-      render: (_, record) => (
-        <Image style={{ borderRadius: '5%' }} width={55} src={getImageUrl(record.thumb)} fallback={errorImg} />
-      ),
+      render: (_, record) => <Image style={{ borderRadius: '5%' }} width={55} src={getImageUrl(record.thumb)} fallback={errorImg} />
     },
     {
       title: '模型标题',
@@ -147,7 +123,7 @@ export default function ModelList() {
       width: 150,
       key: 'title',
       align: 'center',
-      fixed: 'left',
+      fixed: 'left'
     },
     {
       title: '所属分类',
@@ -157,7 +133,7 @@ export default function ModelList() {
       width: 150,
       render(_, record) {
         return record.categoryPath;
-      },
+      }
     },
     {
       title: '模型类型',
@@ -170,9 +146,9 @@ export default function ModelList() {
           0: <Badge status="success" text="标本" />,
           1: <Badge status="processing" text="模型" />,
           2: <Badge status="error" text="动画" />,
-          3: <Badge status="warning" text="断层解剖" />,
+          3: <Badge status="warning" text="断层解剖" />
         }[type];
-      },
+      }
     },
     {
       title: '模型状态',
@@ -180,15 +156,8 @@ export default function ModelList() {
       dataIndex: 'status',
       align: 'center',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="上架"
-            unCheckedChildren="下架"
-            checked={record.status === 1}
-            onChange={() => handleStatusChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="上架" unCheckedChildren="下架" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
 
     {
@@ -198,22 +167,15 @@ export default function ModelList() {
       width: 100,
       align: 'center',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="开启"
-            unCheckedChildren="关闭"
-            checked={record.isGltf === 1}
-            onChange={() => handleGltfChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="开启" unCheckedChildren="关闭" checked={record.isGltf === 1} onChange={() => handleGltfChange(record)} />;
+      }
     },
     {
       title: '模型路径',
       dataIndex: 'scene',
       key: 'scene',
       align: 'center',
-      width: 130,
+      width: 130
     },
 
     { title: '创建时间', dataIndex: 'createdAt', key: 'createdAt', width: 120, align: 'center' },
@@ -252,27 +214,21 @@ export default function ModelList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
 
   const handleCreate = () => {
     const host = window.BASE_URL;
     const oss = window.STORAGE_URL;
     const token = storage.get('x-token');
-    window.open(
-      `https://www.evdo.vip/admin/editor?type=model&app=histology&host=${host}&storage=${oss}&token=${token}`,
-      '_blank',
-    );
+    window.open(`https://www.evdo.vip/admin/editor?type=model&app=histology&host=${host}&storage=${oss}&token=${token}`, '_blank');
   };
   const handleEdit = (record: Api.ResourceManage.Model) => {
     const host = window.BASE_URL;
     const oss = window.STORAGE_URL;
     const token = storage.get('x-token');
-    window.open(
-      `https://www.evdo.vip/admin/editor?id=${record.id}&type=model&app=histology&host=${host}&storage=${oss}&token=${token}`,
-      '_blank',
-    );
+    window.open(`https://www.evdo.vip/admin/editor?id=${record.id}&type=model&app=histology&host=${host}&storage=${oss}&token=${token}`, '_blank');
   };
 
   // 批量排序
@@ -280,7 +236,7 @@ export default function ModelList() {
     const sortList = tableProps.dataSource.map((item) => {
       return {
         id: item.id,
-        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort,
+        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort
       };
     });
 
@@ -298,7 +254,7 @@ export default function ModelList() {
         await fetchDeleteModel({ ids: [id] });
         message.success('删除成功');
         refresh();
-      },
+      }
     });
   };
   // 批量删除操作
@@ -311,7 +267,7 @@ export default function ModelList() {
         message.success('删除成功');
         setIds([]);
         refresh();
-      },
+      }
     });
   };
   // 批量设置状态操作
@@ -325,7 +281,7 @@ export default function ModelList() {
         message.success(statusText + '成功');
         setIds([]);
         refresh();
-      },
+      }
     });
   };
   // 更改状态
@@ -339,7 +295,7 @@ export default function ModelList() {
         message.success(statusText + `成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -358,7 +314,7 @@ export default function ModelList() {
           message.success(statusText + `成功`);
           refresh();
         },
-        onCancel() {},
+        onCancel() {}
       });
     } else {
       gltfRef.current?.open('edit', record);
@@ -384,7 +340,7 @@ export default function ModelList() {
           </Image.PreviewGroup>
         </div>
       ),
-      onOk() {},
+      onOk() {}
     });
   };
 
@@ -406,7 +362,7 @@ export default function ModelList() {
         message.success(`复制${record.title}成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -420,7 +376,7 @@ export default function ModelList() {
         message.success(`转标本成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
   // 二维码
@@ -438,12 +394,10 @@ export default function ModelList() {
             />
           </div>
           <div>
-            <Typography.Paragraph
-              copyable
-            >{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/model/${record.id}`}</Typography.Paragraph>
+            <Typography.Paragraph copyable>{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/model/${record.id}`}</Typography.Paragraph>
           </div>
         </Space>
-      ),
+      )
     });
   };
 
@@ -464,7 +418,7 @@ export default function ModelList() {
       parentId: Number(pid),
       id: node.id,
       name: value,
-      status: node.status, // ✅ 直接用 node.status
+      status: node.status // ✅ 直接用 node.status
     });
     message.success('更新成功');
     await getCategoryList();
@@ -487,12 +441,7 @@ export default function ModelList() {
         <Card
           title="分类"
           style={{ height: '100%' }}
-          extra={
-            <FolderAddOutlined
-              style={{ fontSize: '16px', color: '#1890ff' }}
-              onClick={() => treeRef.current?.addRootNode()}
-            />
-          }
+          extra={<FolderAddOutlined style={{ fontSize: '16px', color: '#1890ff' }} onClick={() => treeRef.current?.addRootNode()} />}
         >
           <BasicTree
             ref={treeRef}
@@ -583,14 +532,14 @@ export default function ModelList() {
                 selectedRowKeys: ids,
                 onChange(selectedRowKeys) {
                   setIds(selectedRowKeys as number[]);
-                },
+                }
               }}
               columns={columns}
               {...tableProps}
               pagination={{
                 ...tableProps.pagination,
                 showQuickJumper: true,
-                showTotal: (total) => `共 ${total} 条`,
+                showTotal: (total) => `共 ${total} 条`
               }}
               scroll={{ x: 2000 }}
             />
