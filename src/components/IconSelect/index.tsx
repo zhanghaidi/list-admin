@@ -68,11 +68,8 @@ const IconSelect: React.FC<IconSelectProps> = ({ value, onChange }) => {
 
   // 根据当前风格选择过滤可见的图标列表
   const visibleIconList = useMemo(
-    () =>
-      Object.keys(allIcons).filter(
-        (iconName) => iconName.includes(iconTheme) && iconName !== 'getTwoToneColor' && iconName !== 'setTwoToneColor',
-      ),
-    [iconTheme],
+    () => Object.keys(allIcons).filter((iconName) => iconName.includes(iconTheme) && iconName !== 'getTwoToneColor' && iconName !== 'setTwoToneColor'),
+    [iconTheme]
   );
 
   // 根据选中的值展示对应的图标组件
@@ -92,7 +89,7 @@ const IconSelect: React.FC<IconSelectProps> = ({ value, onChange }) => {
             options={[
               { label: '线框风格', value: 'Outlined', icon: <OutlinedIcon /> },
               { label: '实底风格', value: 'Filled', icon: <FilledIcon /> },
-              { label: '双色风格', value: 'TwoTone', icon: <TwoToneIcon /> },
+              { label: '双色风格', value: 'TwoTone', icon: <TwoToneIcon /> }
             ]}
             block
             onChange={(value: any) => {
@@ -109,7 +106,7 @@ const IconSelect: React.FC<IconSelectProps> = ({ value, onChange }) => {
               height: 500,
               overflowY: 'auto',
               padding: 0,
-              gap: 16,
+              gap: 16
             }}
           >
             {visibleIconList.map((iconName) => {
@@ -123,7 +120,7 @@ const IconSelect: React.FC<IconSelectProps> = ({ value, onChange }) => {
                     justifyContent: 'center',
                     alignItems: 'center',
                     cursor: 'pointer',
-                    border: value === iconName ? '1px solid #1890ff' : '1px solid #f0f0f0',
+                    border: value === iconName ? '1px solid #1890ff' : '1px solid #f0f0f0'
                   }}
                   onClick={() => {
                     onChange?.(iconName);
@@ -162,7 +159,7 @@ const IconSelect: React.FC<IconSelectProps> = ({ value, onChange }) => {
         addonAfter={
           <SelectedIcon
             style={{
-              cursor: 'pointer',
+              cursor: 'pointer'
             }}
             onClick={() => setPopoverOpen(!popoverOpen)}
           />

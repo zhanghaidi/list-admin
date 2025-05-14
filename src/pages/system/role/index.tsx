@@ -10,26 +10,21 @@ import { fetchGetRoleList, fetchDeleteRole } from '@/api/role';
 import OperateRole from './OperateRole';
 export default function RoleList() {
   const [form] = useForm();
-  const roleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.SystemManage.Role) => void }>({
-    open: () => {},
-  });
-  const getTableData = (
-    { current, pageSize }: { current: number; pageSize: number },
-    formData: Api.Common.SearchParams,
-  ) => {
+  const roleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.SystemManage.Role) => void }>({ open: () => {} });
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetRoleList({
       keywords: formData.name,
       page: current,
-      pageSize: pageSize,
+      pageSize: pageSize
     }).then((data) => {
       return {
         total: data.total,
-        list: data.list,
+        list: data.list
       };
     });
   };
   const { tableProps, search, refresh } = useAntdTable(getTableData, {
-    form,
+    form
   });
 
   const columns: ColumnsType<Api.SystemManage.Role> = [
@@ -52,8 +47,8 @@ export default function RoleList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
 
   const handleCreate = () => {
@@ -70,7 +65,7 @@ export default function RoleList() {
         await fetchDeleteRole(id);
         message.success('删除成功');
         refresh();
-      },
+      }
     });
   };
 

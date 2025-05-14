@@ -29,20 +29,20 @@ const useUserStore = create<UserState>()(
         avatar: '',
         menuList: [],
         buttons: [],
-        roleId: 0,
+        roleId: 0
       },
       collapsed: false,
       isDark: false,
       colorPrimary: {
         color: '#1677ff',
-        name: '拂晓蓝',
+        name: '拂晓蓝'
       },
       updateToken: (token) => set({ token }),
       updateRefreshToken: (refreshToken) => set({ refreshToken }),
       updateUserInfo: (userInfo) => set({ userInfo }),
       updateTheme: (isDark) => set({ isDark }),
       updateColorPrimary: (colorPrimary) => set({ colorPrimary }),
-      updateCollapsed: () => set((state) => ({ collapsed: !state.collapsed })),
+      updateCollapsed: () => set((state) => ({ collapsed: !state.collapsed }))
     }),
     {
       name: 'user-storage',
@@ -50,10 +50,10 @@ const useUserStore = create<UserState>()(
         token: state.token,
         refreshToken: state.refreshToken,
         isDark: state.isDark,
-        colorPrimary: state.colorPrimary,
-      }),
-    },
-  ),
+        colorPrimary: state.colorPrimary
+      })
+    }
+  )
 );
 
 export default useUserStore;

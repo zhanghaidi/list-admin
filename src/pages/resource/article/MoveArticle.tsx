@@ -18,7 +18,7 @@ export default function MoveArticle(props: ModalProp.OperateModalProp<number[]>)
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
@@ -66,12 +66,7 @@ export default function MoveArticle(props: ModalProp.OperateModalProp<number[]>)
           <Input />
         </Form.Item>
         <Form.Item label="选择移动分类" name="categoryId" rules={[{ required: true, message: '请选择移动所属分类' }]}>
-          <TreeSelect
-            placeholder="请选择文章所属分类"
-            allowClear
-            fieldNames={{ label: 'name', value: 'id', children: 'child' }}
-            treeData={categoryList}
-          />
+          <TreeSelect placeholder="请选择文章所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categoryList} />
         </Form.Item>
       </Form>
     </Modal>

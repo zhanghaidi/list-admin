@@ -13,7 +13,7 @@ const baseURL = (window.BASE_URL || import.meta.env.VITE_API_BASE_URL) + '/api/a
 const HttpClient = axios.create({
   baseURL: baseURL,
   timeout: 30 * 1000, // 请求超时时间为 30 秒
-  timeoutErrorMessage: '请求超时，请稍后再试',
+  timeoutErrorMessage: '请求超时，请稍后再试'
 });
 
 /**
@@ -32,7 +32,7 @@ HttpClient.interceptors.request.use(
   (error: AxiosError) => {
     console.error('网络错误，请稍后重试', error);
     return Promise.reject(error);
-  },
+  }
 );
 
 /**
@@ -81,7 +81,7 @@ HttpClient.interceptors.response.use(
       message.error(error.message || '网络错误，请稍后重试');
     }
     return Promise.reject(error.message);
-  },
+  }
 );
 
 // 导出请求方法
@@ -91,5 +91,5 @@ export default {
   },
   post<T>(url: string, params?: object): Promise<T> {
     return HttpClient.post(url, params);
-  },
+  }
 };

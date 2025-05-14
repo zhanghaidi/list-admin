@@ -12,27 +12,10 @@ import {
   PlusOutlined,
   QrcodeOutlined,
   SwapOutlined,
-  TruckOutlined,
+  TruckOutlined
 } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import {
-  Button,
-  Table,
-  Form,
-  Input,
-  Space,
-  Modal,
-  message,
-  Image,
-  Select,
-  Switch,
-  QRCode,
-  Typography,
-  InputNumber,
-  Card,
-  Col,
-  Row,
-} from 'antd';
+import { Button, Table, Form, Input, Space, Modal, message, Image, Select, Switch, QRCode, Typography, InputNumber, Card, Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useRef, useState } from 'react';
@@ -50,7 +33,7 @@ import {
   fetchGetSpecimenMaps,
   fetchCopySpecimen,
   fetchTransformSpecimen,
-  fetchSortSpecimen,
+  fetchSortSpecimen
 } from '@/api/specimen';
 import errorImg from '@/assets/images/image-error.png';
 import BasicTree, { BasicTreeRef } from '@/components/CategoryTree/BasicTree';
@@ -69,16 +52,10 @@ export default function SpecimenList() {
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
   const treeRef = useRef<BasicTreeRef>(null);
-  const specimenRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Specimen) => void }>({
-    open: () => {},
-  });
-  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>({
-    open: () => {},
-  });
+  const specimenRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Specimen) => void }>({ open: () => {} });
+  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>({ open: () => {} });
   //   const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Specimen) => void }>();
-  const moveSpecimenRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
-    open: () => {},
-  });
+  const moveSpecimenRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({ open: () => {} });
   useEffect(() => {
     getCategoryList();
   }, []);
@@ -89,23 +66,20 @@ export default function SpecimenList() {
     setCategoryList(res.list);
   };
 
-  const getTableData = (
-    { current, pageSize }: { current: number; pageSize: number },
-    formData: Api.Common.SearchParams,
-  ) => {
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetSpecimenList({
       ...formData,
       page: current,
-      pageSize: pageSize,
+      pageSize: pageSize
     }).then((data) => {
       return {
         total: data.total,
-        list: data.list,
+        list: data.list
       };
     });
   };
   const { tableProps, search, refresh } = useAntdTable(getTableData, {
-    form,
+    form
   });
 
   const columns: ColumnsType<Api.ResourceManage.Specimen> = [
@@ -119,15 +93,14 @@ export default function SpecimenList() {
         <Form.Item name={record.id} initialValue={record.sort} style={{ margin: 0 }}>
           <InputNumber min={0} style={{ width: '80px', fontSize: '14px' }} />
         </Form.Item>
-      ),
+      )
     },
     {
       title: '序号',
       key: 'index',
       align: 'center',
       width: 80,
-      render: (_: any, __: Api.ResourceManage.Specimen, index: number) =>
-        (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1,
+      render: (_: any, __: Api.ResourceManage.Specimen, index: number) => (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1
     },
     { title: 'ID', dataIndex: 'id', key: 'id', fixed: 'left', align: 'center', width: 100 },
     {
@@ -137,9 +110,7 @@ export default function SpecimenList() {
       fixed: 'left',
       width: 100,
       align: 'center',
-      render: (_, record) => (
-        <Image style={{ borderRadius: '5%' }} width={55} src={getImageUrl(record.thumb)} fallback={errorImg} />
-      ),
+      render: (_, record) => <Image style={{ borderRadius: '5%' }} width={55} src={getImageUrl(record.thumb)} fallback={errorImg} />
     },
     {
       title: '标本标题',
@@ -147,7 +118,7 @@ export default function SpecimenList() {
       width: 150,
       key: 'title',
       align: 'center',
-      fixed: 'left',
+      fixed: 'left'
     },
     {
       title: '所属分类',
@@ -157,7 +128,7 @@ export default function SpecimenList() {
       align: 'center',
       render(_, record) {
         return record.categoryPath;
-      },
+      }
     },
     {
       title: '标本状态',
@@ -165,15 +136,8 @@ export default function SpecimenList() {
       align: 'center',
       dataIndex: 'status',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="上架"
-            unCheckedChildren="下架"
-            checked={record.status === 1}
-            onChange={() => handleStatusChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="上架" unCheckedChildren="下架" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
     {
       title: '开启GLTF',
@@ -182,22 +146,15 @@ export default function SpecimenList() {
       align: 'center',
       width: 100,
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="开启"
-            unCheckedChildren="关闭"
-            checked={record.isGltf === 1}
-            onChange={() => handleGltfChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="开启" unCheckedChildren="关闭" checked={record.isGltf === 1} onChange={() => handleGltfChange(record)} />;
+      }
     },
     {
       title: '标本路径',
       dataIndex: 'scene',
       key: 'scene',
       align: 'center',
-      width: 130,
+      width: 130
     },
 
     { title: '创建时间', dataIndex: 'createdAt', key: 'createdAt', width: 120, align: 'center' },
@@ -236,28 +193,22 @@ export default function SpecimenList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
 
   const handleCreate = () => {
     const host = window.BASE_URL;
     const oss = window.STORAGE_URL;
     const token = storage.get('x-token');
-    window.open(
-      `https://www.evdo.vip/admin/editor?type=specimen&app=histology&host=${host}&storage=${oss}&token=${token}`,
-      '_blank',
-    );
+    window.open(`https://www.evdo.vip/admin/editor?type=specimen&app=histology&host=${host}&storage=${oss}&token=${token}`, '_blank');
     // window.open(`${location.origin}/admin/editor?env=${import.meta.env.MODE}&type=specimen`, '_blank')
   };
   const handleEdit = (record: Api.ResourceManage.Specimen) => {
     const host = window.BASE_URL;
     const oss = window.STORAGE_URL;
     const token = storage.get('x-token');
-    window.open(
-      `https://www.evdo.vip/admin/editor?id=${record.id}&type=specimen&app=histology&host=${host}&storage=${oss}&token=${token}`,
-      '_blank',
-    );
+    window.open(`https://www.evdo.vip/admin/editor?id=${record.id}&type=specimen&app=histology&host=${host}&storage=${oss}&token=${token}`, '_blank');
     // window.open(`${location.origin}/admin/editor?env=${import.meta.env.MODE}&type=specimen&id=${record.id}`, '_blank')
   };
   // 批量排序
@@ -265,7 +216,7 @@ export default function SpecimenList() {
     const sortList = tableProps.dataSource.map((item) => {
       return {
         id: item.id,
-        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort,
+        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort
       };
     });
     if (sortList.length) {
@@ -282,7 +233,7 @@ export default function SpecimenList() {
         await fetchDeleteSpecimen({ ids: [id] });
         message.success('删除成功');
         refresh();
-      },
+      }
     });
   };
   // 批量删除操作
@@ -295,7 +246,7 @@ export default function SpecimenList() {
         message.success('删除成功');
         setIds([]);
         refresh();
-      },
+      }
     });
   };
   // 批量设置状态操作
@@ -309,7 +260,7 @@ export default function SpecimenList() {
         message.success(statusText + '成功');
         setIds([]);
         refresh();
-      },
+      }
     });
   };
   // 更改状态
@@ -323,7 +274,7 @@ export default function SpecimenList() {
         message.success(statusText + `成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -342,7 +293,7 @@ export default function SpecimenList() {
           message.success(statusText + `成功`);
           refresh();
         },
-        onCancel() {},
+        onCancel() {}
       });
     } else {
       gltfRef.current?.open('edit', record);
@@ -368,7 +319,7 @@ export default function SpecimenList() {
           </Image.PreviewGroup>
         </div>
       ),
-      onOk() {},
+      onOk() {}
     });
   };
 
@@ -391,7 +342,7 @@ export default function SpecimenList() {
         message.success(`复制${record.title}成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -405,7 +356,7 @@ export default function SpecimenList() {
         message.success(`转标本成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
   // 二维码
@@ -423,12 +374,10 @@ export default function SpecimenList() {
             />
           </div>
           <div>
-            <Typography.Paragraph
-              copyable
-            >{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/specimen/${record.id}`}</Typography.Paragraph>
+            <Typography.Paragraph copyable>{`${import.meta.env.VITE_WEBSITE_BASE_URL}/web/external/specimen/${record.id}`}</Typography.Paragraph>
           </div>
         </Space>
-      ),
+      )
     });
   };
 
@@ -449,7 +398,7 @@ export default function SpecimenList() {
       parentId: Number(pid),
       id: node.id,
       name: value,
-      status: node.status, // ✅ 直接用 node.status
+      status: node.status // ✅ 直接用 node.status
     });
     message.success('更新成功');
     await getCategoryList();
@@ -473,12 +422,7 @@ export default function SpecimenList() {
         <Card
           title="分类"
           style={{ height: '100%' }}
-          extra={
-            <FolderAddOutlined
-              style={{ fontSize: '16px', color: '#1890ff' }}
-              onClick={() => treeRef.current?.addRootNode()}
-            />
-          }
+          extra={<FolderAddOutlined style={{ fontSize: '16px', color: '#1890ff' }} onClick={() => treeRef.current?.addRootNode()} />}
         >
           <BasicTree
             ref={treeRef}
@@ -569,14 +513,14 @@ export default function SpecimenList() {
                 selectedRowKeys: ids,
                 onChange(selectedRowKeys) {
                   setIds(selectedRowKeys as number[]);
-                },
+                }
               }}
               columns={columns}
               {...tableProps}
               pagination={{
                 ...tableProps.pagination,
                 showQuickJumper: true,
-                showTotal: (total) => `共 ${total} 条`,
+                showTotal: (total) => `共 ${total} 条`
               }}
               scroll={{ x: 2000 }}
             />

@@ -58,5 +58,5 @@ export default {
   clear() {
     const keys = Object.keys(localStorage).filter((key) => key.startsWith(`${namespace}:`));
     keys.forEach((key) => localStorage.removeItem(key));
-  },
+  }
 };

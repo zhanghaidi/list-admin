@@ -1,15 +1,7 @@
 import { message } from 'antd';
 import { Editor } from 'tinymce';
 
-export default function (
-  editor: Editor,
-  isEdit?: boolean,
-  node?: HTMLElement,
-  noteStore?: any,
-  imgSrc?: string,
-  imgWidth?: string,
-  imgHeight?: string,
-) {
+export default function (editor: Editor, isEdit?: boolean, node?: HTMLElement, noteStore?: any, imgSrc?: string, imgWidth?: string, imgHeight?: string) {
   const getRatio = (url: string, callback: (radio: number, width: number, height: number) => void) => {
     const img = new Image();
     img.src = url;
@@ -29,54 +21,54 @@ export default function (
         items: [
           {
             type: 'htmlpanel',
-            html: '<div>图片地址</div>',
+            html: '<div>图片地址</div>'
           },
           {
             type: 'urlinput',
             name: 'src',
-            filetype: 'image',
+            filetype: 'image'
           },
           {
             type: 'htmlpanel',
-            html: '<div>图片宽度</div>',
+            html: '<div>图片宽度</div>'
           },
           {
             type: 'input',
-            name: 'width',
+            name: 'width'
           },
           {
             type: 'htmlpanel',
-            html: '<div>图片高度</div>',
+            html: '<div>图片高度</div>'
           },
           {
             type: 'input',
-            name: 'height',
+            name: 'height'
           },
           {
             type: 'checkbox',
             name: 'isRatio',
-            label: '保持比例',
-          },
-        ],
+            label: '保持比例'
+          }
+        ]
       },
       initialData: {
         src: { value: imgSrc ?? '' },
         width: imgWidth ?? '',
         height: imgHeight ?? '',
-        isRatio: true,
+        isRatio: true
       },
       buttons: [
         {
           type: 'cancel',
           name: 'closeButton',
-          text: '取消',
+          text: '取消'
         },
         {
           type: 'submit',
           name: 'submitButton',
           text: '确定',
-          primary: true,
-        },
+          primary: true
+        }
       ],
       onSubmit: function (api) {
         const { src, width, height } = api.getData();
@@ -156,7 +148,7 @@ export default function (
             });
           }
         }
-      },
+      }
     });
   };
 }

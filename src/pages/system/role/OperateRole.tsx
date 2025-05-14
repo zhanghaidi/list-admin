@@ -15,7 +15,7 @@ export default function OperateRole(props: ModalProp.OperateModalProp<Api.System
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   const getMenuList = async () => {
@@ -96,7 +96,7 @@ export default function OperateRole(props: ModalProp.OperateModalProp<Api.System
             fieldNames={{
               key: 'id',
               title: 'name',
-              children: 'child',
+              children: 'child'
             }}
             onCheck={onCheck}
             checkedKeys={checkedKeys}

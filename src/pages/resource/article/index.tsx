@@ -1,29 +1,6 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  FolderAddOutlined,
-  OrderedListOutlined,
-  PlusOutlined,
-  TruckOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, EyeOutlined, FolderAddOutlined, OrderedListOutlined, PlusOutlined, TruckOutlined } from '@ant-design/icons';
 import { useAntdTable } from 'ahooks';
-import {
-  Button,
-  Table,
-  Form,
-  Input,
-  Space,
-  Modal,
-  message,
-  Image,
-  Select,
-  Switch,
-  InputNumber,
-  Card,
-  Col,
-  Row,
-} from 'antd';
+import { Button, Table, Form, Input, Space, Modal, message, Image, Select, Switch, InputNumber, Card, Col, Row } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { ColumnsType } from 'antd/es/table';
 import React, { useEffect, useRef, useState } from 'react';
@@ -37,7 +14,7 @@ import {
   fetchCreateCategory,
   fetchUpdateCategory,
   fetchStatusCategory,
-  fetchDeleteCategory,
+  fetchDeleteCategory
 } from '@/api/article';
 import errorImg from '@/assets/images/image-error.png';
 import BasicTree, { BasicTreeRef } from '@/components/CategoryTree/BasicTree';
@@ -52,12 +29,8 @@ export default function ArticleList() {
   const [sortForm] = useForm();
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
-  const articleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Article) => void }>({
-    open: () => {},
-  });
-  const moveArticleRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
-    open: () => {},
-  });
+  const articleRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Article) => void }>({ open: () => {} });
+  const moveArticleRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({ open: () => {} });
   const treeRef = useRef<BasicTreeRef>(null);
 
   useEffect(() => {
@@ -70,23 +43,20 @@ export default function ArticleList() {
     setCategoryList(res.list);
   };
 
-  const getTableData = (
-    { current, pageSize }: { current: number; pageSize: number },
-    formData: Api.Common.SearchParams,
-  ) => {
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetArticleList({
       ...formData,
       page: current,
-      pageSize: pageSize,
+      pageSize: pageSize
     }).then((data) => {
       return {
         total: data.total,
-        list: data.list,
+        list: data.list
       };
     });
   };
   const { tableProps, search, refresh } = useAntdTable(getTableData, {
-    form,
+    form
   });
 
   const columns: ColumnsType<Api.ResourceManage.Article> = [
@@ -100,15 +70,14 @@ export default function ArticleList() {
         <Form.Item name={record.id} initialValue={record.sort} style={{ margin: 0 }}>
           <InputNumber min={0} style={{ width: '80px', fontSize: '14px' }} />
         </Form.Item>
-      ),
+      )
     },
     {
       title: '序号',
       key: 'index',
       align: 'center',
       width: 80,
-      render: (_: any, __: Api.ResourceManage.Article, index: number) =>
-        (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1,
+      render: (_: any, __: Api.ResourceManage.Article, index: number) => (tableProps.pagination.current - 1) * tableProps.pagination.pageSize + index + 1
     },
     { title: 'ID', dataIndex: 'id', align: 'center', width: 100, key: 'id' },
     {
@@ -117,16 +86,14 @@ export default function ArticleList() {
       key: 'thumb',
       width: 100,
       align: 'center',
-      render: (_, record) => (
-        <Image style={{ borderRadius: '5%' }} width={85} src={getImageUrl(record.thumb)} fallback={errorImg} />
-      ),
+      render: (_, record) => <Image style={{ borderRadius: '5%' }} width={85} src={getImageUrl(record.thumb)} fallback={errorImg} />
     },
     {
       title: '文章标题',
       dataIndex: 'title',
       width: 200,
       align: 'center',
-      key: 'title',
+      key: 'title'
     },
     {
       title: '所属分类',
@@ -136,14 +103,14 @@ export default function ArticleList() {
       align: 'center',
       render(_, record) {
         return record.category?.path;
-      },
+      }
     },
     {
       title: '文章描述',
       dataIndex: 'description',
       align: 'center',
       width: 450,
-      key: 'description',
+      key: 'description'
     },
     {
       title: '文章状态',
@@ -151,15 +118,8 @@ export default function ArticleList() {
       width: 100,
       align: 'center',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="显示"
-            unCheckedChildren="隐藏"
-            checked={record.status === 1}
-            onChange={() => handleStatusChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="显示" unCheckedChildren="隐藏" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
     { title: '创建时间', dataIndex: 'createdAt', align: 'center', width: 200, key: 'createdAt' },
     {
@@ -181,8 +141,8 @@ export default function ArticleList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
 
   const handleCreate = () => {
@@ -200,7 +160,7 @@ export default function ArticleList() {
     const sortList = tableProps.dataSource.map((item) => {
       return {
         id: item.id,
-        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort,
+        value: sortForm.getFieldValue(item.id) !== undefined ? sortForm.getFieldValue(item.id) : item.sort
       };
     });
 
@@ -218,7 +178,7 @@ export default function ArticleList() {
         await fetchDeleteArticle({ ids: [id] });
         message.success('删除成功');
         refresh();
-      },
+      }
     });
   };
   // 批量删除操作
@@ -231,7 +191,7 @@ export default function ArticleList() {
         message.success('删除成功');
         setIds([]);
         refresh();
-      },
+      }
     });
   };
 
@@ -246,7 +206,7 @@ export default function ArticleList() {
         message.success(statusText + `成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
   const handlePreview = (record: Api.ResourceManage.Article) => {
@@ -255,7 +215,7 @@ export default function ArticleList() {
       content: <ArticleViewer article={record} />,
       icon: null, // 可选：不显示默认 icon
       okText: '关闭',
-      cancelButtonProps: { style: { display: 'none' } }, // 只保留一个“关闭”按钮
+      cancelButtonProps: { style: { display: 'none' } } // 只保留一个“关闭”按钮
     });
   };
 
@@ -276,7 +236,7 @@ export default function ArticleList() {
       parentId: Number(pid),
       id: node.id,
       name: value,
-      status: node.status, // ✅ 直接用 node.status
+      status: node.status // ✅ 直接用 node.status
     });
     message.success('更新成功');
     await getCategoryList();
@@ -299,12 +259,7 @@ export default function ArticleList() {
         <Card
           title="分类"
           style={{ height: '100%' }}
-          extra={
-            <FolderAddOutlined
-              style={{ fontSize: '16px', color: '#1890ff' }}
-              onClick={() => treeRef.current?.addRootNode()}
-            />
-          }
+          extra={<FolderAddOutlined style={{ fontSize: '16px', color: '#1890ff' }} onClick={() => treeRef.current?.addRootNode()} />}
         >
           <BasicTree
             ref={treeRef}
@@ -371,14 +326,14 @@ export default function ArticleList() {
                 selectedRowKeys: ids,
                 onChange(selectedRowKeys) {
                   setIds(selectedRowKeys as number[]);
-                },
+                }
               }}
               columns={columns}
               {...tableProps}
               pagination={{
                 ...tableProps.pagination,
                 showQuickJumper: true,
-                showTotal: (total) => `共 ${total} 条`,
+                showTotal: (total) => `共 ${total} 条`
               }}
             />
           </Form>

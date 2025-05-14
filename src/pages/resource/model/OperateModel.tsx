@@ -24,7 +24,7 @@ export default function OperateModel(props: ModalProp.OperateModalProp<Api.Resou
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
@@ -107,12 +107,7 @@ export default function OperateModel(props: ModalProp.OperateModalProp<Api.Resou
           <Input />
         </Form.Item>
         <Form.Item label="所属分类" name="categoryId" rules={[{ required: true, message: '请选择模型所属分类' }]}>
-          <TreeSelect
-            placeholder="请选择模型所属分类"
-            allowClear
-            fieldNames={{ label: 'name', value: 'id', children: 'child' }}
-            treeData={categories}
-          />
+          <TreeSelect placeholder="请选择模型所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categories} />
         </Form.Item>
         <Form.Item label="模型标题" name="title" rules={[{ required: true, message: '请输入模型标题' }]}>
           <Input placeholder="请输入模型标题" />
@@ -139,13 +134,7 @@ export default function OperateModel(props: ModalProp.OperateModalProp<Api.Resou
         </Form.Item>
 
         <Form.Item label="模型封面">
-          <Upload
-            name="thumb"
-            listType="picture-card"
-            showUploadList={false}
-            customRequest={handleUpload}
-            beforeUpload={beforeUpload}
-          >
+          <Upload name="thumb" listType="picture-card" showUploadList={false} customRequest={handleUpload} beforeUpload={beforeUpload}>
             {img ? (
               <img src={getImageUrl(img)} style={{ width: '100%', height: '100%', borderRadius: '5%' }} />
             ) : (

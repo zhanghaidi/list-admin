@@ -1,13 +1,6 @@
 import { Editor } from 'tinymce';
 
-export default function (
-  editor: Editor,
-  isEdit?: boolean,
-  url?: string,
-  text?: string,
-  node?: HTMLElement,
-  noteStore?: any,
-) {
+export default function (editor: Editor, isEdit?: boolean, url?: string, text?: string, node?: HTMLElement, noteStore?: any) {
   return () =>
     editor.windowManager.open({
       title: isEdit ? '编辑链接' : '插入链接',
@@ -16,38 +9,38 @@ export default function (
         items: [
           {
             type: 'htmlpanel',
-            html: '<div>网址</div>',
+            html: '<div>网址</div>'
           },
           {
             type: 'input',
-            name: 'url',
+            name: 'url'
           },
           {
             type: 'htmlpanel',
-            html: '<div>显示文本</div>',
+            html: '<div>显示文本</div>'
           },
           {
             type: 'input',
-            name: 'text',
-          },
-        ],
+            name: 'text'
+          }
+        ]
       },
       initialData: {
         url: url ?? '',
-        text: text ?? '',
+        text: text ?? ''
       },
       buttons: [
         {
           type: 'cancel',
           name: 'closeButton',
-          text: '取消',
+          text: '取消'
         },
         {
           type: 'submit',
           name: 'submitButton',
           text: '确定',
-          primary: true,
-        },
+          primary: true
+        }
       ],
       onSubmit: function (api) {
         const { url, text } = api.getData();
@@ -84,6 +77,6 @@ export default function (
           }
         }
         api.close();
-      },
+      }
     });
 }

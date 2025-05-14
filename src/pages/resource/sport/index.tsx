@@ -40,15 +40,9 @@ export default function SportList() {
   const [sortForm] = useForm();
   const [categoryList, setCategoryList] = useState<Api.ResourceManage.CategoryNodes[]>([]);
   const [ids, setIds] = useState<number[]>([]);
-  const sportRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Sport) => void }>({
-    open: () => {}
-  });
-  const moveSportRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({
-    open: () => {}
-  });
-  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Sport) => void }>({
-    open: () => {}
-  });
+  const sportRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.ResourceManage.Sport) => void }>({ open: () => {} });
+  const moveSportRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({ open: () => {} });
+  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.ResourceManage.Sport) => void }>({ open: () => {} });
   const treeRef = useRef<BasicTreeRef>(null);
 
   useEffect(() => {

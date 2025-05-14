@@ -24,7 +24,7 @@ export default function OperateSpecimen(props: ModalProp.OperateModalProp<Api.Re
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
@@ -102,24 +102,13 @@ export default function OperateSpecimen(props: ModalProp.OperateModalProp<Api.Re
       onOk={handleSubmit}
       onCancel={handleCancel}
     >
-      <Form
-        className="modal-from"
-        form={form}
-        labelAlign="right"
-        labelCol={{ span: 4 }}
-        initialValues={{ is_slice_type: 0 }}
-      >
+      <Form className="modal-from" form={form} labelAlign="right" labelCol={{ span: 4 }} initialValues={{ is_slice_type: 0 }}>
         <Form.Item hidden name="id">
           <Input />
         </Form.Item>
 
         <Form.Item label="所属分类" name="categoryId" rules={[{ required: true, message: '请选择标本所属分类' }]}>
-          <TreeSelect
-            placeholder="请选择标本所属分类"
-            allowClear
-            fieldNames={{ label: 'name', value: 'id', children: 'child' }}
-            treeData={categories}
-          />
+          <TreeSelect placeholder="请选择标本所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categories} />
         </Form.Item>
         <Form.Item label="标本标题" name="title" rules={[{ required: true, message: '请输入标本标题' }]}>
           <Input placeholder="请输入标本标题" />
@@ -140,13 +129,7 @@ export default function OperateSpecimen(props: ModalProp.OperateModalProp<Api.Re
           </Radio.Group>
         </Form.Item>
         <Form.Item label="标本封面">
-          <Upload
-            name="thumb"
-            listType="picture-card"
-            showUploadList={false}
-            customRequest={handleUpload}
-            beforeUpload={beforeUpload}
-          >
+          <Upload name="thumb" listType="picture-card" showUploadList={false} customRequest={handleUpload} beforeUpload={beforeUpload}>
             {img ? (
               <img src={getImageUrl(img)} style={{ width: '100%', height: '100%', borderRadius: '5%' }} />
             ) : (

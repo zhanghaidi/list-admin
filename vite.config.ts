@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     base: env.VITE_WEB_BASE_PATH || '/',
     plugins: [
-      react(),
+      react()
 
       //   svgr({
       //     include: ['**/*.svg', '**/*.svg?react'],
@@ -17,17 +17,17 @@ export default defineConfig(({ mode }) => {
       //   }),
     ],
     optimizeDeps: {
-      exclude: ['lucide-react'],
+      exclude: ['lucide-react']
     },
     resolve: {
       alias: {
         // 使用 resolve 方法替代 path.resolve
-        '@': resolve(__dirname, 'src'),
-      },
+        '@': resolve(__dirname, 'src')
+      }
     },
     server: {
       host: '0.0.0.0',
-      port: 8000,
-    },
+      port: 8000
+    }
   };
 });

@@ -20,7 +20,7 @@ export default function BreadCrumb() {
       <a key={'home'} href="/home">
         首页
       </a>,
-      ...list,
+      ...list
     ]);
   }, [pathname]);
   return <Breadcrumb items={breadList.map((item) => ({ title: item }))} style={{ marginLeft: 10 }} />;

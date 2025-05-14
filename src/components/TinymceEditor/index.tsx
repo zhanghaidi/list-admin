@@ -148,42 +148,42 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                     type: 'menuitem',
                     icon: 'p',
                     text: '普通文本',
-                    onAction: () => editor.execCommand('FormatBlock', false, 'p'),
+                    onAction: () => editor.execCommand('FormatBlock', false, 'p')
                   },
                   {
                     type: 'menuitem',
                     icon: 'h1',
                     text: '一级标题',
-                    onAction: () => editor.execCommand('FormatBlock', false, 'h1'),
+                    onAction: () => editor.execCommand('FormatBlock', false, 'h1')
                   },
                   {
                     type: 'menuitem',
                     icon: 'h2',
                     text: '二级标题',
-                    onAction: () => editor.execCommand('FormatBlock', false, 'h2'),
+                    onAction: () => editor.execCommand('FormatBlock', false, 'h2')
                   },
                   {
                     type: 'menuitem',
                     icon: 'h3',
                     text: '三级标题',
-                    onAction: () => editor.execCommand('FormatBlock', false, 'h3'),
+                    onAction: () => editor.execCommand('FormatBlock', false, 'h3')
                   },
                   {
                     type: 'menuitem',
                     icon: 'h4',
                     text: '四级标题',
-                    onAction: () => editor.execCommand('FormatBlock', false, 'h4'),
-                  },
+                    onAction: () => editor.execCommand('FormatBlock', false, 'h4')
+                  }
                 ];
                 callback(items);
-              },
+              }
             });
 
             editor.ui.registry.addContextToolbar('imagealignment', {
               predicate: (node) => node.nodeName === 'IMG' || node.nodeName === 'A',
               items: 'edit delete',
               position: 'node',
-              scope: 'node',
+              scope: 'node'
             });
 
             editor.ui.registry.addButton('delete', {
@@ -193,7 +193,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                 const selectedBlock = editor.selection.getSelectedBlocks()[0];
                 editor.selection.select(selectedBlock);
                 editor.insertContent('<p></p>');
-              },
+              }
             });
 
             editor.ui.registry.addButton('edit', {
@@ -206,7 +206,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                 } else if (node.nodeName === 'IMG') {
                   editor.execCommand('mceImage');
                 }
-              },
+              }
             });
 
             editor.ui.registry.addMenuButton('insertMore', {
@@ -221,7 +221,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                     onAction: () => {
                       const action = customLink(editor);
                       action();
-                    },
+                    }
                   },
                   {
                     type: 'menuitem',
@@ -231,7 +231,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                       editor.focus();
                       const action = customImage(editor);
                       action();
-                    },
+                    }
                   },
                   {
                     type: 'nestedmenuitem',
@@ -245,7 +245,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                           setMediaType('video');
                           const action = customVideo(editor);
                           action();
-                        },
+                        }
                       },
                       {
                         type: 'menuitem',
@@ -253,9 +253,9 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                         onAction: () => {
                           setMediaType('video');
                           setIsSelect(true);
-                        },
-                      },
-                    ],
+                        }
+                      }
+                    ]
                   },
                   {
                     type: 'menuitem',
@@ -264,16 +264,16 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
                     onAction: () => {
                       setMediaType('model');
                       setIsSelect(true);
-                    },
-                  },
+                    }
+                  }
                 ]);
-              },
+              }
             });
             // 切换按钮图标
             icons.forEach((item) => {
               editor.ui.registry.addIcon(item.name, item.icon);
             });
-          },
+          }
         }}
       />
       {/* <FilterResource
@@ -282,12 +282,7 @@ export default function TinymceEditor(props: React.ComponentProps<typeof Editor>
         onSubmit={insertResource}
         onClose={() => setIsSelect(false)}
       /> */}
-      <ResourceLibraryModal
-        mediaType={mediaType}
-        isOpen={isSelect}
-        onCancel={() => setIsSelect(false)}
-        onSubmit={insertResource}
-      />
+      <ResourceLibraryModal mediaType={mediaType} isOpen={isSelect} onCancel={() => setIsSelect(false)} onSubmit={insertResource} />
     </div>
   );
 }

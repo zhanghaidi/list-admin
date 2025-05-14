@@ -26,18 +26,13 @@ export default function AdminList() {
   // 自定义Ref
   const adminRef = useRef<{
     open: (type: ModalProp.OperateAction, data?: ModalProp.AdminProp) => void;
-  }>({
-    open: () => {},
-  });
+  }>({ open: () => {} });
   // 表格数据
-  const getTableData = (
-    { current, pageSize }: { current: number; pageSize: number },
-    formData: Api.Common.SearchParams,
-  ) => {
+  const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetAdminList({
       ...formData,
       page: current,
-      pageSize: pageSize,
+      pageSize: pageSize
     }).then((data) => {
       return { total: data.total, list: data.list };
     });
@@ -57,7 +52,7 @@ export default function AdminList() {
         await fetchDeleteAdmin({ id });
         message.success('删除成功');
         refresh();
-      },
+      }
     });
   };
 
@@ -72,7 +67,7 @@ export default function AdminList() {
         message.success(statusText + `成功`);
         refresh();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -81,32 +76,32 @@ export default function AdminList() {
       title: '用户ID',
       dataIndex: 'id',
       key: 'id',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '头像昵称',
       dataIndex: 'nickName',
       key: 'nickName',
       align: 'center',
-      render: (_, record) => <UserAvatarNickname avatar={getImageUrl(record.avatar)} nickName={record.nickName} />,
+      render: (_, record) => <UserAvatarNickname avatar={getImageUrl(record.avatar)} nickName={record.nickName} />
     },
     {
       title: '用户名',
       dataIndex: 'username',
       key: 'username',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '姓名',
       dataIndex: 'realName',
       key: 'realName',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '手机号',
       dataIndex: 'mobile',
       key: 'mobile',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '用户角色',
@@ -117,13 +112,13 @@ export default function AdminList() {
         <Tag color="processing" key={role.id}>
           {role.name}
         </Tag>
-      ),
+      )
     },
     {
       title: '注册时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '用户状态',
@@ -131,15 +126,8 @@ export default function AdminList() {
       key: 'enable',
       align: 'center',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="启用"
-            unCheckedChildren="禁用"
-            checked={record.enable === 1}
-            onChange={() => handleStatusChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="启用" unCheckedChildren="禁用" checked={record.enable === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
     {
       title: '操作',
@@ -156,8 +144,8 @@ export default function AdminList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
   return (
     <div>
@@ -209,7 +197,7 @@ export default function AdminList() {
           pagination={{
             ...tableProps.pagination,
             showQuickJumper: true,
-            showTotal: (total) => `共 ${total} 条`,
+            showTotal: (total) => `共 ${total} 条`
           }}
         />
       </div>

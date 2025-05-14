@@ -19,14 +19,11 @@ export default function OperateMenu(props: ModalProp.OperateModalProp<Api.System
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
-  const open = async (
-    type: ModalProp.OperateAction,
-    data?: Api.SystemManage.MenuUpdate | { parentId: number; id: number },
-  ) => {
+  const open = async (type: ModalProp.OperateAction, data?: Api.SystemManage.MenuUpdate | { parentId: number; id: number }) => {
     setAction(type);
     setVisible(true);
     getMenuList();
@@ -86,15 +83,7 @@ export default function OperateMenu(props: ModalProp.OperateModalProp<Api.System
   };
 
   return (
-    <Modal
-      title="创建菜单"
-      width={1000}
-      open={visible}
-      okText="确定"
-      cancelText="取消"
-      onOk={handleSubmit}
-      onCancel={handleCancel}
-    >
+    <Modal title="创建菜单" width={1000} open={visible} okText="确定" cancelText="取消" onOk={handleSubmit} onCancel={handleCancel}>
       <div className="modal-from">
         <Form form={form} labelCol={{ span: 5 }} initialValues={{ type: 0, status: 1 }}>
           <Form.Item hidden name="id">
@@ -140,11 +129,7 @@ export default function OperateMenu(props: ModalProp.OperateModalProp<Api.System
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item
-                label="排序"
-                name="sort"
-                tooltip={{ title: '排序值越大越靠后', icon: <InfoCircleOutlined rev={undefined} /> }}
-              >
+              <Form.Item label="排序" name="sort" tooltip={{ title: '排序值越大越靠后', icon: <InfoCircleOutlined rev={undefined} /> }}>
                 <InputNumber min={0} style={{ width: 335 }} placeholder="请输入排序值" />
               </Form.Item>
             </Col>

@@ -23,7 +23,7 @@ const ChunkUpload: React.FC<ChunkUploadProps> = ({
   onChange,
   onSuccess,
   maxFileSize = 1024, // 默认最大文件大小 1GB
-  allowedFileTypes = ['jpg', 'png', 'mp4', 'pdf', 'docx', 'zip'], // 默认允许的文件类型
+  allowedFileTypes = ['jpg', 'png', 'mp4', 'pdf', 'docx', 'zip'] // 默认允许的文件类型
 }) => {
   const [progress, setProgress] = useState(0);
   const [fileList, setFileList] = useState<any[]>([]);
@@ -75,7 +75,7 @@ const ChunkUpload: React.FC<ChunkUploadProps> = ({
           const partRes = await uploadChunk(chunk, {
             uploadId,
             filePath,
-            partNumber: (i + 1).toString(),
+            partNumber: (i + 1).toString()
           });
           partETags.push({ partNumber: i + 1, etag: partRes.etag });
           setProgress(Math.round(((i + 1) / chunkCount) * 100));
@@ -90,7 +90,7 @@ const ChunkUpload: React.FC<ChunkUploadProps> = ({
         uploadId,
         filePath,
         filename: file.name,
-        parts: partETags,
+        parts: partETags
       });
 
       if (completeRes.path) {

@@ -12,16 +12,8 @@ export default function MenuList() {
   const [form] = useForm();
   const [data, setData] = useState<Api.SystemManage.Menu[]>([]);
 
-  // 修改后：
-  const menuRef = useRef<{
-    open: (
-      type: ModalProp.OperateAction,
-      data?: Api.SystemManage.MenuUpdate | { parentId?: number; sort?: number },
-    ) => void;
-  }>({
-    open: () => {
-      // 可选：可留空或抛出错误提示未实现
-    },
+  const menuRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.SystemManage.MenuUpdate | { parentId?: number; sort?: number }) => void }>({
+    open: () => {}
   });
 
   useEffect(() => {
@@ -42,7 +34,7 @@ export default function MenuList() {
   // 创建方法
   const handleCreate = () => {
     menuRef.current?.open('create', {
-      sort: data.length,
+      sort: data.length
     });
   };
 
@@ -66,7 +58,7 @@ export default function MenuList() {
         await fetchDeleteMenu({ id: record.id });
         message.success('删除成功');
         getMenuList();
-      },
+      }
     });
   };
 
@@ -82,7 +74,7 @@ export default function MenuList() {
         message.success(statusText + typeText + `成功`);
         getMenuList();
       },
-      onCancel() {},
+      onCancel() {}
     });
   };
 
@@ -90,13 +82,13 @@ export default function MenuList() {
     {
       title: '菜单名称',
       dataIndex: 'name',
-      key: 'name',
+      key: 'name'
     },
     {
       title: '菜单图标',
       dataIndex: 'icon',
       key: 'icon',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '菜单类型',
@@ -107,27 +99,27 @@ export default function MenuList() {
         return {
           0: <Tag color="processing">菜单</Tag>,
           1: <Tag color="default">按钮</Tag>,
-          2: <Tag color="success">页面</Tag>,
+          2: <Tag color="success">页面</Tag>
         }[type];
-      },
+      }
     },
     {
       title: '权限标识',
       dataIndex: 'permission',
       key: 'permission',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '路由地址',
       dataIndex: 'path',
       key: 'path',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '组件名称',
       dataIndex: 'component',
       key: 'component',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '菜单状态',
@@ -135,21 +127,14 @@ export default function MenuList() {
       key: 'status',
       align: 'center',
       render(_, record) {
-        return (
-          <Switch
-            checkedChildren="启用"
-            unCheckedChildren="停用"
-            checked={record.status === 1}
-            onChange={() => handleStatusChange(record)}
-          />
-        );
-      },
+        return <Switch checkedChildren="启用" unCheckedChildren="停用" checked={record.status === 1} onChange={() => handleStatusChange(record)} />;
+      }
     },
     {
       title: '创建时间',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      align: 'center',
+      align: 'center'
     },
     {
       title: '操作',
@@ -171,8 +156,8 @@ export default function MenuList() {
             </Button>
           </Space>
         );
-      },
-    },
+      }
+    }
   ];
 
   return (
@@ -206,13 +191,7 @@ export default function MenuList() {
             </Button>
           </div>
         </div>
-        <Table
-          rowKey="id"
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          expandable={{ childrenColumnName: 'child' }}
-        />
+        <Table rowKey="id" columns={columns} dataSource={data} pagination={false} expandable={{ childrenColumnName: 'child' }} />
         <OperateMenu mRef={menuRef} update={getMenuList} />
       </div>
     </div>

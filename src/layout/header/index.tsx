@@ -21,13 +21,12 @@ const presetColors = [
   '#a0d911', // 青柠
   '#722ed1', // 酱紫
   '#1890ff', // 极客蓝
-  '#faad14', // 金盏花
+  '#faad14' // 金盏花
 ];
 
 const NavHeader = () => {
   const navigate = useNavigate();
-  const { userInfo, collapsed, isDark, updateCollapsed, updateTheme, colorPrimary, updateColorPrimary } =
-    useUserStore();
+  const { userInfo, collapsed, isDark, updateCollapsed, updateTheme, colorPrimary, updateColorPrimary } = useUserStore();
 
   useEffect(() => {
     handleThemeSwitch(isDark);
@@ -56,17 +55,17 @@ const NavHeader = () => {
   const userMenu = [
     {
       key: 'nickName',
-      label: '用户名：' + userInfo.nickName,
+      label: '用户名：' + userInfo.nickName
     },
     {
       key: 'realName',
-      label: '手机号：' + userInfo.realName,
+      label: '手机号：' + userInfo.realName
     },
     {
       key: 'logout',
       icon: <LoginOutlined />,
-      label: '退出登录',
-    },
+      label: '退出登录'
+    }
   ];
 
   return (
@@ -83,12 +82,7 @@ const NavHeader = () => {
 
       <div className={clsx(styles.right, styles.alignItemsCenter)}>
         <Tooltip title="主题切换">
-          <Switch
-            checked={isDark}
-            onChange={handleThemeSwitch}
-            checkedChildren={<MoonOutlined />}
-            unCheckedChildren={<SunOutlined />}
-          />
+          <Switch checked={isDark} onChange={handleThemeSwitch} checkedChildren={<MoonOutlined />} unCheckedChildren={<SunOutlined />} />
         </Tooltip>
 
         <Tooltip title="主题色">
@@ -99,8 +93,8 @@ const NavHeader = () => {
             presets={[
               {
                 label: '推荐主题色',
-                colors: presetColors,
-              },
+                colors: presetColors
+              }
             ]}
             style={{ margin: 12 }}
           />

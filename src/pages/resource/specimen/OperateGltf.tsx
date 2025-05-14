@@ -11,7 +11,7 @@ export default function OperateGltf(props: ModalProp.OperateModalProp<Api.Resour
   const [gltf, setGltf] = useState<File | null>(null);
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数

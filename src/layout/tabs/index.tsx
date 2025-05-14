@@ -28,7 +28,7 @@ export default function LayoutTabs() {
       tabsList.push({
         key: route.path,
         label: route.name,
-        closable: pathname !== '/',
+        closable: pathname !== '/'
       });
     }
     setTabsList([...tabsList]);

@@ -11,13 +11,7 @@ interface LoadMorePlaceholderProps {
   onLoadMore?: () => void;
 }
 
-export const LoadMorePlaceholder: React.FC<LoadMorePlaceholderProps> = ({
-  compact,
-  loading,
-  empty,
-  noMore,
-  onLoadMore,
-}) => {
+export const LoadMorePlaceholder: React.FC<LoadMorePlaceholderProps> = ({ compact, loading, empty, noMore, onLoadMore }) => {
   const loadMoreHandler = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     e.stopPropagation();

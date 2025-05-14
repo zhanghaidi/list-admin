@@ -29,7 +29,7 @@ const SideMenu = () => {
     key,
     icon,
     children,
-    label,
+    label
   });
   // 创建图标
   const createIcon = (name?: string) => {
@@ -71,7 +71,7 @@ const SideMenu = () => {
         theme={isDark ? 'light' : 'dark'}
         style={{
           width: collapsed ? 80 : 'auto',
-          height: 'calc(100vh - 50px)',
+          height: 'calc(100vh - 50px)'
         }}
         selectedKeys={selectedKeys}
         onClick={handleClickMenu}

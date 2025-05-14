@@ -40,16 +40,10 @@ export default function AnimalList() {
   const location = useLocation();
   const [categoryList, setCategoryList] = useState<Api.AnimalManger.AnimalCategory[]>([]);
   const [ids, setIds] = useState<number[]>([]);
-  const animalRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.AnimalManger.Animal) => void }>({
-    open: () => {}
-  });
-  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.AnimalManger.Animal) => void }>({
-    open: () => {}
-  });
+  const animalRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.AnimalManger.Animal) => void }>({ open: () => {} });
+  const gltfRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.AnimalManger.Animal) => void }>({ open: () => {} });
   const moveAnimalRef = useRef<{ open: (type: ModalProp.OperateAction, data: number[]) => void }>({ open: () => {} });
-  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.AnimalManger.Animal) => void }>({
-    open: () => {}
-  });
+  const previewRef = useRef<{ open: (type: ModalProp.OperateAction, data: Api.AnimalManger.Animal) => void }>({ open: () => {} });
   const categoryId = new URLSearchParams(location.search).get('categoryId');
 
   useEffect(() => {

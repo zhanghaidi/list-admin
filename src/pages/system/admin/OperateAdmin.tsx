@@ -109,16 +109,12 @@ export default function OperateAdmin(props: ModalProp.OperateModalProp<Api.Syste
           name="username"
           rules={[
             { required: true, message: '请输入用户账号' },
-            { min: 2, max: 20, message: '用户名称最小2个字符，最大20个字符' },
+            { min: 2, max: 20, message: '用户名称最小2个字符，最大20个字符' }
           ]}
         >
           <Input placeholder="请输入用户账号"></Input>
         </Form.Item>
-        <Form.Item
-          label="用户密码"
-          name="password"
-          rules={action === 'edit' ? [] : [{ required: true, message: '请输入用户密码' }]}
-        >
+        <Form.Item label="用户密码" name="password" rules={action === 'edit' ? [] : [{ required: true, message: '请输入用户密码' }]}>
           <Input.Password placeholder="请输入密码" />
         </Form.Item>
         <Form.Item label="真实姓名" name="realName" rules={[{ required: true, message: '请输入真实姓名' }]}>
@@ -129,7 +125,7 @@ export default function OperateAdmin(props: ModalProp.OperateModalProp<Api.Syste
           name="mobile"
           rules={[
             { len: 11, message: '请输入11位手机号' },
-            { pattern: /1[1-9]\d{9}/, message: '请输入1开头的11位手机号' },
+            { pattern: /1[1-9]\d{9}/, message: '请输入1开头的11位手机号' }
           ]}
         >
           <Input type="number" placeholder="请输入手机号" />
@@ -147,13 +143,7 @@ export default function OperateAdmin(props: ModalProp.OperateModalProp<Api.Syste
           </Select>
         </Form.Item>
         <Form.Item label="用户头像">
-          <Upload
-            name="avatar"
-            listType="picture-circle"
-            showUploadList={false}
-            customRequest={handleUpload}
-            beforeUpload={beforeUpload}
-          >
+          <Upload name="avatar" listType="picture-circle" showUploadList={false} customRequest={handleUpload} beforeUpload={beforeUpload}>
             {img ? (
               <img src={getImageUrl(img)} style={{ width: '100%', height: '100%', borderRadius: '100%' }} />
             ) : (

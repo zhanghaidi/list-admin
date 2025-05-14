@@ -15,14 +15,14 @@ export default async function AuthLoader() {
     return {
       buttonList: data.buttons,
       menuList: data.menuList,
-      menuPathList,
+      menuPathList
     };
   } catch (error) {
     console.error(error);
     return {
       buttonList: [],
       menuList: [],
-      menuPathList: [],
+      menuPathList: []
     };
   }
 }

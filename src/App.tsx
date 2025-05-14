@@ -22,10 +22,10 @@ const App: React.FC = () => {
         cssVar: true, // ✅ 开启 CSS 变量
         hashed: false, // ✅ 禁用哈希类名，方便 SCSS 直接使用类名
         token: {
-          colorPrimary: colorPrimary.color,
+          colorPrimary: colorPrimary.color
         },
         algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
-        components: { Tree: { titleHeight: 32 } },
+        components: { Tree: { titleHeight: 32 } }
       }}
     >
       <AntdApp>

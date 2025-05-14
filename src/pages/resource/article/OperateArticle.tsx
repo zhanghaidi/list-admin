@@ -25,7 +25,7 @@ export default function OperateArticle(props: ModalProp.OperateModalProp<Api.Res
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
@@ -111,21 +111,10 @@ export default function OperateArticle(props: ModalProp.OperateModalProp<Api.Res
           <Input placeholder="请输入文章标题" />
         </Form.Item>
         <Form.Item label="文章分类" name="categoryId" rules={[{ required: true, message: '请选择文章分类' }]}>
-          <TreeSelect
-            placeholder="请选择文章分类"
-            allowClear
-            fieldNames={{ label: 'name', value: 'id', children: 'child' }}
-            treeData={categories}
-          />
+          <TreeSelect placeholder="请选择文章分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categories} />
         </Form.Item>
         <Form.Item label="文章封面">
-          <Upload
-            name="thumb"
-            listType="picture-card"
-            showUploadList={false}
-            customRequest={handleUpload}
-            beforeUpload={beforeUpload}
-          >
+          <Upload name="thumb" listType="picture-card" showUploadList={false} customRequest={handleUpload} beforeUpload={beforeUpload}>
             {img ? (
               <img src={getImageUrl(img)} style={{ width: '100%', height: '100%', borderRadius: '5%' }} />
             ) : (

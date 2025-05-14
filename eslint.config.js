@@ -14,25 +14,25 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 'latest', // ✅ 最新 ECMAScript 语法
       sourceType: 'module', // ✅ 允许 import/export
-      globals: globals.browser, // ✅ 允许浏览器全局变量
+      globals: globals.browser // ✅ 允许浏览器全局变量
     },
     settings: {
       react: {
-        version: 'detect', // ✅ 自动检测 React 版本
+        version: 'detect' // ✅ 自动检测 React 版本
       },
       'import/resolver': {
         alias: {
           map: [['@', './src']], // ✅ 允许 `@/xxx` 作为路径别名
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        },
-      },
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }
+      }
     },
     files: ['**/*.{ts,tsx,js,jsx}'],
     plugins: {
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      import: importPlugin,
+      import: importPlugin
     },
     rules: {
       ...react.configs.recommended.rules,
@@ -54,9 +54,9 @@ export default tseslint.config(
           pathGroups: [{ pattern: '@/**', group: 'internal', position: 'after' }],
           distinctGroup: true,
           'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
-    },
-  },
+          alphabetize: { order: 'asc', caseInsensitive: true }
+        }
+      ]
+    }
+  }
 );

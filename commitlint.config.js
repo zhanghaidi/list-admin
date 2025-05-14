@@ -16,7 +16,7 @@ export default {
       footer: '列举关联issue (可选) 例如: #31, #I3244 :\n',
       generatingByAI: '正在通过 AI 生成你的提交简短描述...',
       generatedSelectByAI: '选择一个 AI 生成的简短描述:',
-      confirmCommit: '是否提交或修改commit ?',
+      confirmCommit: '是否提交或修改commit ?'
     },
     // prettier-ignore
     types: [
@@ -63,6 +63,6 @@ export default {
     defaultBody: '',
     defaultIssues: '',
     defaultScope: '',
-    defaultSubject: '',
-  },
+    defaultSubject: ''
+  }
 };

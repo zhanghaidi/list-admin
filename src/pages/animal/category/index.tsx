@@ -15,9 +15,7 @@ export default function CategoryList() {
   const [form] = useForm();
   const [sortForm] = useForm();
   const navigate = useNavigate();
-  const categoryRef = useRef<{
-    open: (type: ModalProp.OperateAction, data?: Api.AnimalManger.AnimalCategory) => void;
-  }>();
+  const categoryRef = useRef<{ open: (type: ModalProp.OperateAction, data?: Api.AnimalManger.AnimalCategory) => void }>({ open: () => {} });
 
   const getTableData = ({ current, pageSize }: { current: number; pageSize: number }, formData: Api.Common.SearchParams) => {
     return fetchGetCategory({

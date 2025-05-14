@@ -29,7 +29,7 @@ export default function Login() {
         username: values.username,
         password: values.password,
         captcha: values.captcha,
-        captchaKey: captcha.captchaKey,
+        captchaKey: captcha.captchaKey
       });
       storage.set('x-token', res.token);
       storage.set('refreshToken', res.refreshToken);
@@ -46,14 +46,7 @@ export default function Login() {
     <div className={styles.container}>
       <div className={styles.card}>
         <h1 className={styles.title}>任务单管理平台</h1>
-        <Form
-          name="login"
-          initialValues={{ remember: true }}
-          onFinish={handleLogin}
-          autoComplete="off"
-          layout="vertical"
-          className={styles.form}
-        >
+        <Form name="login" initialValues={{ remember: true }} onFinish={handleLogin} autoComplete="off" layout="vertical" className={styles.form}>
           <Form.Item name="username" rules={[{ required: true, message: '账号不能为空' }]}>
             <Input size="large" placeholder="请输入账号" prefix={<UserOutlined className={styles.icon} />} />
           </Form.Item>
@@ -68,11 +61,7 @@ export default function Login() {
             </Form.Item>
             <Form.Item>
               <div className={styles.captchaBox} onClick={handleChangeCaptcha}>
-                {captcha.imgPath ? (
-                  <Image preview={false} src={captcha.imgPath} />
-                ) : (
-                  <span className={styles.loadingText}>加载中...</span>
-                )}
+                {captcha.imgPath ? <Image preview={false} src={captcha.imgPath} /> : <span className={styles.loadingText}>加载中...</span>}
               </div>
             </Form.Item>
           </div>

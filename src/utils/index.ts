@@ -46,7 +46,7 @@ export const formatDate = (date?: Date | string | number, rule?: string) => {
     'd+': curDate.getDate(),
     'H+': curDate.getHours(),
     'm+': curDate.getMinutes(),
-    's+': curDate.getSeconds(),
+    's+': curDate.getSeconds()
   };
 
   for (const k in O) {

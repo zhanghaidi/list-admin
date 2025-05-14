@@ -334,8 +334,8 @@ export default function QuestionList() {
               <Button type="primary" onClick={handleCreate}>
                 <PlusOutlined /> 新增
               </Button>
-              <Button icon={<ImportOutlined />} onClick={handleImport}>
-                导入题库
+              <Button onClick={handleImport}>
+                <ImportOutlined /> 导入题库
               </Button>
               <Button type="default" onClick={handleSort}>
                 <OrderedListOutlined />

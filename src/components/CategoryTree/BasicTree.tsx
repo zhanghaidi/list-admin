@@ -52,7 +52,7 @@ const BasicTreeComponent = (props: BasicTreeProps, ref: Ref<BasicTreeRef>) => {
           key: item[key],
           title: item[title],
           children: Array.isArray(item[children]) ? transformTreeData(item[children]) : [],
-          ...item,
+          ...item
         } as ExtendTreeDataNode;
       });
     };
@@ -68,20 +68,13 @@ const BasicTreeComponent = (props: BasicTreeProps, ref: Ref<BasicTreeRef>) => {
   };
 
   // 更新树数据
-  const updateTreeData = (
-    treeData: ExtendTreeDataNode[],
-    newNode: ExtendTreeDataNode,
-    parentNodeKey?: React.Key,
-  ): ExtendTreeDataNode[] => {
+  const updateTreeData = (treeData: ExtendTreeDataNode[], newNode: ExtendTreeDataNode, parentNodeKey?: React.Key): ExtendTreeDataNode[] => {
     if (typeof parentNodeKey === 'undefined') {
       return [newNode, ...treeData];
     }
     return treeData.map((node) => ({
       ...node,
-      children:
-        node.key === parentNodeKey
-          ? [newNode, ...(node.children || [])]
-          : updateTreeData(node.children || [], newNode, parentNodeKey),
+      children: node.key === parentNodeKey ? [newNode, ...(node.children || [])] : updateTreeData(node.children || [], newNode, parentNodeKey)
     }));
   };
 
@@ -91,7 +84,7 @@ const BasicTreeComponent = (props: BasicTreeProps, ref: Ref<BasicTreeRef>) => {
     return data
       .map((node) => ({
         ...node,
-        children: node.children ? removeNodeById(node.children, targetId) : [],
+        children: node.children ? removeNodeById(node.children, targetId) : []
       }))
       .filter((node) => node.key !== targetId || (node.children && node.children.length > 0));
   };
@@ -207,7 +200,7 @@ const BasicTreeComponent = (props: BasicTreeProps, ref: Ref<BasicTreeRef>) => {
       addNode(newNode);
       setIsEditing(true);
       setIsAdding(true);
-    },
+    }
   }));
 
   return (
@@ -218,22 +211,10 @@ const BasicTreeComponent = (props: BasicTreeProps, ref: Ref<BasicTreeRef>) => {
         treeData={treeData}
         expandedKeys={expandedKeys}
         showIcon
-        icon={({ expanded }) =>
-          expanded ? (
-            <FolderOpenOutlined style={{ color: '#1890ff' }} />
-          ) : (
-            <FolderOutlined style={{ color: '#1890ff' }} />
-          )
-        }
+        icon={({ expanded }) => (expanded ? <FolderOpenOutlined style={{ color: '#1890ff' }} /> : <FolderOutlined style={{ color: '#1890ff' }} />)}
         titleRender={(nodeData) => (
           <span style={{ color: nodeData.status === 0 ? '#999' : 'inherit' }}>
-            <TreeTitle
-              node={nodeData}
-              id={editNodeKey}
-              isEditing={isEditing}
-              onSave={handleSaveNode}
-              onCancel={handleCancelEdit}
-            />
+            <TreeTitle node={nodeData} id={editNodeKey} isEditing={isEditing} onSave={handleSaveNode} onCancel={handleCancelEdit} />
           </span>
         )}
         onRightClick={handleRightClick}

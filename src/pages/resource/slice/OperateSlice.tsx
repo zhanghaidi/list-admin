@@ -41,7 +41,7 @@ export default function OperateSlice(props: ModalProp.OperateModalProp<Api.Resou
 
   // 组件暴露open方法
   useImperativeHandle(props.mRef, () => ({
-    open,
+    open
   }));
 
   // 打开弹框函数
@@ -102,12 +102,7 @@ export default function OperateSlice(props: ModalProp.OperateModalProp<Api.Resou
           <Input />
         </Form.Item>
         <Form.Item label="所属分类" name="categoryId" rules={[{ required: true, message: '请选择切片所属分类' }]}>
-          <TreeSelect
-            placeholder="请选择切片所属分类"
-            allowClear
-            fieldNames={{ label: 'name', value: 'id', children: 'child' }}
-            treeData={categories}
-          />
+          <TreeSelect placeholder="请选择切片所属分类" allowClear fieldNames={{ label: 'name', value: 'id', children: 'child' }} treeData={categories} />
         </Form.Item>
         <Form.Item label="切片标题" name="title" rules={[{ required: true, message: '请输入切片标题' }]}>
           <Input placeholder="请输入切片标题" />

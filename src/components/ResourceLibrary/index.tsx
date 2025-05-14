@@ -97,17 +97,13 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
       setLoading(!isLoadMore);
 
       const parentId = currentCategoryIndex === -1 ? undefined : categories[currentCategoryIndex]?.id;
-      const childId = subCategories
-        ? currentSubCategoryIndex === -1
-          ? undefined
-          : subCategories[currentSubCategoryIndex]?.id
-        : undefined;
+      const childId = subCategories ? (currentSubCategoryIndex === -1 ? undefined : subCategories[currentSubCategoryIndex]?.id) : undefined;
 
       const params = {
         keywords: searchKeyword,
         categoryId: parentId,
         children_id: childId,
-        pageSize: 100,
+        pageSize: 100
       };
 
       const res = await (async () => {
@@ -151,11 +147,7 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
   };
 
   const handleResourceClick = (index: number) => {
-    const resourceType = ['model', 'specimen', 'slice', 'video'][currentResourceType] as
-      | 'model'
-      | 'specimen'
-      | 'slice'
-      | 'video';
+    const resourceType = ['model', 'specimen', 'slice', 'video'][currentResourceType] as 'model' | 'specimen' | 'slice' | 'video';
     onSubmit(resourceType, dataList[index]);
     onCancel();
   };
@@ -177,10 +169,7 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
     <Modal className={styles.modal} open={isOpen} footer={null} onCancel={onCancel}>
       <div className={styles.container}>
         <div className={styles.left}>
-          <div
-            className={clsx(styles.type, { [styles.active]: showTypeMenu })}
-            onClick={() => setShowTypeMenu(!showTypeMenu)}
-          >
+          <div className={clsx(styles.type, { [styles.active]: showTypeMenu })} onClick={() => setShowTypeMenu(!showTypeMenu)}>
             <span>{resourceTypeLabels[currentResourceType]}</span>
             <CaretUpOutlined />
             <div className={clsx(styles.options, { [styles.active]: showTypeMenu })}>
@@ -196,18 +185,11 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
             </div>
           </div>
           <div className={clsx(styles.category, 'scrollBox')} onMouseMove={bodyYesScroll} onMouseLeave={bodyNoScroll}>
-            <div
-              className={clsx(styles.item, { [styles.active]: currentCategoryIndex === -1 })}
-              onClick={() => handleCategoryClick(-1)}
-            >
+            <div className={clsx(styles.item, { [styles.active]: currentCategoryIndex === -1 })} onClick={() => handleCategoryClick(-1)}>
               全部{resourceTypeLabels[currentResourceType]}
             </div>
             {categories.map((item, index) => (
-              <div
-                key={item.id}
-                className={clsx(styles.item, { [styles.active]: currentCategoryIndex === index })}
-                onClick={() => handleCategoryClick(index)}
-              >
+              <div key={item.id} className={clsx(styles.item, { [styles.active]: currentCategoryIndex === index })} onClick={() => handleCategoryClick(index)}>
                 {item.name}
               </div>
             ))}
@@ -216,24 +198,19 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
         <div className={styles.right}>
           <div className={styles.header}>
             <div className={styles.search}>
-              <Input
-                placeholder="输入搜索关键字"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
-                onPressEnter={handleSearch}
-              />
+              <Input placeholder="输入搜索关键字" value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} onPressEnter={handleSearch} />
               <SearchOutlined onClick={handleSearch} />
             </div>
           </div>
           <div
             className={clsx(styles['secondary-category'], {
-              [styles.expand]: true,
+              [styles.expand]: true
             })}
           >
             <div className={styles.list}>
               <div
                 className={clsx(styles.item, {
-                  [styles.active]: currentSubCategoryIndex === -1,
+                  [styles.active]: currentSubCategoryIndex === -1
                 })}
                 onClick={() => handleSubCategoryClick(-1)}
               >
@@ -244,7 +221,7 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
                   <div
                     key={item.id}
                     className={clsx(styles.item, {
-                      [styles.active]: currentSubCategoryIndex === index,
+                      [styles.active]: currentSubCategoryIndex === index
                     })}
                     onClick={() => handleSubCategoryClick(index)}
                   >
@@ -253,30 +230,14 @@ const ResourceLibraryModal: React.FC<ResourceLibraryModalProps> = ({ isOpen, onC
                 ))}
             </div>
           </div>
-          <div
-            ref={resourceListEl}
-            className={clsx(styles.main, 'scrollBox')}
-            onMouseMove={bodyYesScroll}
-            onMouseLeave={bodyNoScroll}
-          >
+          <div ref={resourceListEl} className={clsx(styles.main, 'scrollBox')} onMouseMove={bodyYesScroll} onMouseLeave={bodyNoScroll}>
             {dataList.map((item, index) => (
               <div key={item.id} className={styles.resource} onClick={() => handleResourceClick(index)}>
-                <img
-                  className={styles.thumb}
-                  src={getImageUrl(item.thumb)}
-                  alt=""
-                  onError={(e) => (e.currentTarget.src = imageLoadFailed)}
-                  loading="lazy"
-                />
+                <img className={styles.thumb} src={getImageUrl(item.thumb)} alt="" onError={(e) => (e.currentTarget.src = imageLoadFailed)} loading="lazy" />
                 <div className={styles.name}>{item.title}</div>
               </div>
             ))}
-            <ListPlaceholder
-              loading={loadingMore}
-              noMore={noMore && !loading}
-              empty={dataList.length === 0 && !loading}
-              textStyle={{ color: '#999' }}
-            />
+            <ListPlaceholder loading={loadingMore} noMore={noMore && !loading} empty={dataList.length === 0 && !loading} textStyle={{ color: '#999' }} />
           </div>
         </div>
       </div>

@@ -10,54 +10,54 @@ export default function (editor: Editor) {
         items: [
           {
             type: 'htmlpanel',
-            html: '<div>视频地址</div>',
+            html: '<div>视频地址</div>'
           },
           {
             type: 'urlinput',
             name: 'src',
-            filetype: 'media',
+            filetype: 'media'
           },
           {
             type: 'htmlpanel',
-            html: '<div>视频宽度</div>',
+            html: '<div>视频宽度</div>'
           },
           {
             type: 'input',
-            name: 'width',
+            name: 'width'
           },
           {
             type: 'htmlpanel',
-            html: '<div>视频高度</div>',
+            html: '<div>视频高度</div>'
           },
           {
             type: 'input',
-            name: 'height',
+            name: 'height'
           },
           {
             type: 'checkbox',
             name: 'isRatio',
-            label: '保持比例',
-          },
-        ],
+            label: '保持比例'
+          }
+        ]
       },
       initialData: {
         isRatio: true,
         src: { value: '' },
         width: '860',
-        height: '485',
+        height: '485'
       },
       buttons: [
         {
           type: 'cancel',
           name: 'closeButton',
-          text: '取消',
+          text: '取消'
         },
         {
           type: 'submit',
           name: 'submitButton',
           text: '确定',
-          primary: true,
-        },
+          primary: true
+        }
       ],
       onSubmit: function (api) {
         const { src, width, height } = api.getData();
@@ -109,6 +109,6 @@ export default function (editor: Editor) {
             api.setData({ width: widthVal.toString(), height: heightVal.toString() });
           }
         }
-      },
+      }
     });
 }
