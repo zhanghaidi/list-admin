@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createHashRouter, Navigate } from 'react-router-dom';
 
 import Error404 from '@/pages/exception/404';
 import Home from '@/pages/home';
@@ -9,7 +9,7 @@ import AuthLoader from './AuthLoader';
 import { LayoutGuard } from './guard';
 import { lazyLoad } from './LazyLoad';
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/',
     element: <Navigate to="/welcome" />
