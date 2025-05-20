@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:test": "tsc && vite build --mode test",
+    "build:dev": "tsc && vite build --mode development",
     "lint": "eslint . --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0 --fix",
     "preview": "vite preview",
     "format": "prettier --write .",
