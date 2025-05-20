@@ -34,7 +34,7 @@ export default function Login() {
       storage.set('x-token', res.token);
       storage.set('refreshToken', res.refreshToken);
       window.message.success('登录成功');
-      navigate('/welcome');
+      navigate('/');
     } catch (error) {
       console.error('登录失败:', error);
       handleChangeCaptcha();

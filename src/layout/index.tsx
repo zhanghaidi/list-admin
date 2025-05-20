@@ -44,8 +44,8 @@ const BaseLayout: React.FC = () => {
           </div>
           <Footer style={{ textAlign: 'center' }}>
             河南中博科技有限公司 ©{new Date().getFullYear()}{' '}
-            <a target="_blank" href="https://histology.evdo.vip" rel="noreferrer">
-              组织学虚拟仿真系统
+            <a target="_blank" href="https://list.evdo.vip" rel="noreferrer">
+              任务单管理系统
             </a>
           </Footer>
         </div>
