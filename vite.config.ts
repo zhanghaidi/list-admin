@@ -2,19 +2,17 @@ import { resolve } from 'path';
 
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig, loadEnv } from 'vite';
-
-// import svgr from 'vite-plugin-svgr';
+import svgr from 'vite-plugin-svgr';
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
   return {
     base: env.VITE_WEB_BASE_PATH || '/',
     plugins: [
-      react()
-
-      //   svgr({
-      //     include: ['**/*.svg', '**/*.svg?react'],
-      //     exclude: ['**/*.svg?url', '**/*.svg?raw', '**/*.svg?inline'],
-      //   }),
+      react(),
+      svgr({
+        include: ['**/*.svg', '**/*.svg?react'],
+        exclude: ['**/*.svg?url', '**/*.svg?raw', '**/*.svg?inline']
+      })
     ],
     optimizeDeps: {
       exclude: ['lucide-react']

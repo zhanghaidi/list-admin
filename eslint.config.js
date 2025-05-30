@@ -39,7 +39,7 @@ export default tseslint.config(
       ...react.configs['jsx-runtime'].rules,
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
-      'no-console': 'warn', // ✅ 避免 console.log
+      'no-console': 'off', // ✅ 避免 console.log
       'no-debugger': 'warn', // ✅ 避免 debugger
       'react/prop-types': 'off', // ✅ TypeScript 代替 prop-types
       'react-hooks/rules-of-hooks': 'error', // ✅ 确保 Hooks 规则正确
